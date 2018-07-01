@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "nodemon server/server",
-    "test": "mocha"
+    "test": "mocha-- exit"
   },
   "author": "Jim Tisdale",
   "license": "ISC"
