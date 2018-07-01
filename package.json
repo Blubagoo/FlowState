@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/server",
   "directories": {
-    "test": "mocha-- exit"
+    "test": "test"
   },
   "dependencies": {
     "express": "^4.16.3",
