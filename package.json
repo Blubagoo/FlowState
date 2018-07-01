@@ -2,8 +2,10 @@
   "name": "fullstack-capstone",
   "version": "1.0.0",
   "description": "",
- 
-
+  "main": "server/server",
+  "directories": {
+    "test": "/test/test-server"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "morgan": "^1.9.0"
@@ -12,7 +14,8 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "faker": "^4.1.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.17.5"
   },
   "scripts": {
     "start": "nodemon server/server",
