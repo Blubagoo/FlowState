@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/server",
-  "directories": {
-    "test": "test"
-  },
+
   "dependencies": {
     "express": "^4.16.3",
     "morgan": "^1.9.0"
@@ -18,7 +16,7 @@
   },
   "scripts": {
     "start": "nodemon server/server",
-    "test": "mocha-- exit"
+    "test": "mocha"
   },
   "author": "Jim Tisdale",
   "license": "ISC"
