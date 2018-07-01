@@ -5,7 +5,7 @@ node_js: node
 deploy:
   provider: heroku
   api_key:
-    secure: d81a2f4c-7b17-4964-bff8-21397fe20eb9
+    secure: e429f8fe-6aee-45ae-9a61-1cc33a34771a
   app: flow-state
   on:
     repo: Blubagoo/FlowState
