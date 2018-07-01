@@ -1,14 +1,16 @@
 'use strict';
 
 const express = require('express');
-const app = express();
 
+const app = express();
 
 app.use(express.static('public'));
 
 
 
-
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/server/index.html');
+});
 
 
 
@@ -21,4 +23,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = app;
+module.exports = {app};
