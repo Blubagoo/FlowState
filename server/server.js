@@ -1,6 +1,10 @@
 'use strict';
 
 const express = require('express');
+const appMiddleware = require('./middleware/middleware');
+const PORT = process.env.PORT || 8080;
+const router = express.Router();
+
 
 const app = express();
 
@@ -11,6 +15,8 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/server/index.html');
 });
+
+
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');

@@ -1,4 +1,8 @@
 // 'use strict';
+import * as myModule from '/FileSaver.js';
+
+const APP_ID = "d93ca6ab";
+const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
 const constraints = {
   audio: false,
@@ -49,9 +53,14 @@ function listenForEvent() {
                                                       lastModified: Date.now()
                                                     });
             console.log(myFile);
-            videoUrl = window.URL.createObjectURL(myFile);
-            console.log(videoUrl);
-            submitFileToApi(myFile, videoUrl);
+            
+            
+            const tryVideo = myModule.saveAs(blob, "tst-video");
+           
+           
+    
+
+            submitFileToApi(tryVideo);
           }
         });
 
@@ -66,25 +75,24 @@ function listenForEvent() {
 
 }
 
-function submitFileToApi(file, url) {
+function submitFileToApi(file) {
+  
   console.log(file);
-  console.log(url);
+  
   const settings = {
     url: `https://api.kairos.com/v2/media?source=${file}`,
     headers: {
-      "app_id": "d93ca6ab",
-      "app_key": "25ec525dac1aa1a66f16bd8edf551ea0",
+      "app_id": `${APP_ID}`,
+      "app_key": `${APP_KEY}`,
     },
     method: "POST",
     success: function(data) {
-      console.log('success');
+      console.log('success', data);
+
     },
     error: function(error) {
       console.error(error);
     }
-
-
-
   }
   $.ajax(settings);
 }
