@@ -68,19 +68,21 @@ function listenForEvent() {
 
 function submitFileToApi(file, url) {
   console.log(file);
-  console.log(videoUrl);
+  console.log(url);
   const settings = {
-    url: `https://api.kairos.com/v2/media?source=${url.blob}`,
+    url: `https://api.kairos.com/v2/media?source=${file}`,
     headers: {
       "app_id": "d93ca6ab",
       "app_key": "25ec525dac1aa1a66f16bd8edf551ea0",
     },
+    method: "POST",
     success: function(data) {
       console.log('success');
     },
     error: function(error) {
       console.error(error);
     }
+
 
 
   }
