@@ -4,6 +4,7 @@ const express = require('express');
 const appMiddleware = require('./middleware/middleware');
 const PORT = process.env.PORT || 8080;
 const router = express.Router();
+const {VidSchema} = require('./api/resources/tempVideoStrg/tempStorageModel')
 
 
 const app = express();
@@ -11,9 +12,8 @@ const app = express();
 app.use(express.static('public'));
 
 
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/server/index.html');
+app.get('/:id', (req, res) => {
+  res.json(VidSchema.get());
 });
 
 
