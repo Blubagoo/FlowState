@@ -31,7 +31,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/resources/tempVideoStrg', function(req, res){
-  var file = __dirname + `/api/resources/tempVideoStrg/tst-video.mp4`;
+  var file = __dirname + `/api/resources/tempVideoStrg/tst-video.webm`;
   res.download(file); // Set disposition and send it.
 });
 
