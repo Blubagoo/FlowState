@@ -4,12 +4,14 @@ const express = require('express');
 const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
-const appMiddleware = require('./middleware/middleware');
+
 const PORT = process.env.PORT || 8080;
 const router = express.Router();
 
+const appMiddleware = require('./middleware/middleware');
 
 const app = express();
+
 appMiddleware(app);
 
 app.use(express.static('public'));
