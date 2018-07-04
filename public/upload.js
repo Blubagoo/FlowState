@@ -3,7 +3,7 @@ import * as myModule from '/FileSaver.js';
 
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
-
+const VIDEO_URL = "https://"
 const constraints = {
   audio: false,
   video: {
@@ -54,9 +54,9 @@ function listenForEvent(stream) {
           mediaRecorder.onstop = function(e) {
             console.log('recorder stopped');
 
-            let blob = new Blob(chunks, {'type':'video/webm\;codecs=vp8'});
+            let blob = new Blob(chunks, {'type':'video/WEBM\;codecs=h264'});
             console.log(blob);
-            let myFile = new File([blob], "tstVideo", {type: 'video/webm\;codecs=vp8',
+            let myFile = new File([blob], "tstVideo", {type: 'video/WEBM\;codecs=h264',
                                                     lastModified: Date.now()});
 
             console.log(myFile);            
@@ -138,6 +138,8 @@ $('#upload-input').on('change', function(){
 
   }
 });
+
+
 // function buildAPI(file) {
 //   const settings = {
 //     url: `https://localhost:8080/api/upload`,
@@ -152,24 +154,24 @@ $('#upload-input').on('change', function(){
 // }
 
 
-// function submitFileToApi(file) {
+function submitFileToApi(url) {
   
-//   console.log(file);
+  console.log(url);
   
-//   const settings = {
-//     url: `https://api.kairos.com/v2/media?source=${file}`,
-//     headers: {
-//       "app_id": `${APP_ID}`,
-//       "app_key": `${APP_KEY}`,
-//     },
-//     method: "POST",
-//     success: function(data) {
-//       console.log('success', data);
+  const settings = {
+    url: `https://api.kairos.com/v2/media?source=${url}`,
+    headers: {
+      "app_id": `${APP_ID}`,
+      "app_key": `${APP_KEY}`,
+    },
+    method: "POST",
+    success: function(data) {
+      console.log('success', data);
 
-//     },
-//     error: function(error) {
-//       console.error(error);
-//     }
-//   }
-//   $.ajax(settings);
-// }
+    },
+    error: function(error) {
+      console.error(error);
+    }
+  }
+  $.ajax(settings);
+}
