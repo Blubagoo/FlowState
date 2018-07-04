@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
-
 const appMiddleware = require('./middleware/middleware');
 const PORT = process.env.PORT || 8080;
 const router = express.Router();
@@ -30,7 +29,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/resources/tempVideoStrg', function(req, res){
-  var file = __dirname + `/api/resources/tempVideoStrg/tst-video(20).webm`;
+  var file = __dirname + `/api/resources/tempVideoStrg/tst-video.webm`;
   res.download(file); // Set disposition and send it.
 });
 
