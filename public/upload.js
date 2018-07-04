@@ -8,38 +8,43 @@ const constraints = {
   audio: false,
   video: {
     width: {ideal:640},
-    height: {ideal:480}
+    height: {ideal:480},
+    frameRate: { ideal: 20, max: 25 }
   }
 };
 
 navigator.mediaDevices.getUserMedia(constraints)
       .then(function(stream) {
-        
+        const mediaRecorder = new MediaRecorder(stream);
         var video = document.querySelector('video');
+        
         video.srcObject = stream;
+        
         video.onloadedmetadata = function(e) {
           video.play();
         };
-        listenForEvent(stream);
+        
+        listenForEvent(mediaRecorder);
       })
+      
       .catch(function(err) {
         console.log(err.name + ": " + err.message);
       });
 
 
-function listenForEvent(stream) {
+function listenForEvent(shell) {
   $('#btn-start-recording').on('click', function() {
     this.disabled = true;        
-        var mediaRecorder = new MediaRecorder(stream);
-
-        mediaRecorder.start();
         
-        console.log(mediaRecorder.state);
+
+        shell.start();
+        
+        console.log(shell.state);
         console.log("recorder started");
      
         let chunks = [];
        
-        mediaRecorder.ondataavailable = function(e) {
+        shell.ondataavailable = function(e) {
           chunks.push(e.data);
         };
         
@@ -47,11 +52,11 @@ function listenForEvent(stream) {
           this.disabled = true;
           $('#btn-start-recording').disabled = false;
           
-          mediaRecorder.stop();
+          shell.stop();
           
-          console.log(mediaRecorder.state);
+          console.log(shell.state);
           
-          mediaRecorder.onstop = function(e) {
+          shell.onstop = function(e) {
             console.log('recorder stopped');
 
             let blob = new Blob(chunks, {'type':'video/WEBM\;codecs=h264'});

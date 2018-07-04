@@ -125,17 +125,17 @@ export var saveAs = saveAs || (function(view) {
 				}
 			;
 			filesaver.readyState = filesaver.INIT;
-			console.log('before if statement in question');
+			
 			if (can_use_save_link) {
 				object_url = get_URL().createObjectURL(blob);
 				setImmediate(function() {
-					console.log('inside if statement');
+					
 					save_link.href = object_url;
 					save_link.download = name;
 					click(save_link);
 					dispatch_all();
 					revoke(object_url);
-					console.log(save_link)
+					
 					filesaver.readyState = filesaver.DONE;
 				}, 0);
 				return;
