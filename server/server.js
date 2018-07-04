@@ -30,9 +30,9 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
-app.get('/api/resources/tempVideoStrg', function(req, res){
-  var file = __dirname + `/api/resources/tempVideoStrg/tst-video.webm`;
-  res.download(file); // Set disposition and send it.
+app.get('/api/resources/tempVideoStrg/:uid', function(req, res){
+  var file = __dirname + `/api/resources/tempVideoStrg/${req.params.uid}`;
+  res.sendFile(file); // Set disposition and send it.
 });
 
 
