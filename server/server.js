@@ -1,22 +1,19 @@
 'use strict';
 
 const express = require('express');
+const path = require('path');
+const formidable = require('formidable');
+const fs = require('fs');
+
 const appMiddleware = require('./middleware/middleware');
 const PORT = process.env.PORT || 8080;
 const router = express.Router();
-const {VidSchema} = require('./api/resources/tempVideoStrg/tempStorageModel')
 
 
 const app = express();
+appMiddleware(app);
 
 app.use(express.static('public'));
-
-
-app.get('/:id', (req, res) => {
-  res.json(VidSchema.get());
-});
-
-
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -27,6 +24,34 @@ app.use(function (req, res, next) {
   }
   next();
 });
+
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname, 'views/index.html'));
+});
+
+app.get('/api/resources/tempVideoStrg', function(req, res){
+  var file = __dirname + `/api/resources/tempVideoStrg/tst-video(20).webm`;
+  res.download(file); // Set disposition and send it.
+});
+
+
+app.post('/upload', function(req, res){
+	var form = new formidable.IncomingForm();
+  form.multiples = true;
+  form.uploadDir = path.join(__dirname, '/api/resources/tempVideoStrg');
+  form.on('file', function(field, file) {
+    fs.rename(file.path, path.join(form.uploadDir, file.name));
+  });
+  form.on('error', function(err) {
+    console.log('An error has occured: \n' + err);
+  });
+  form.on('end', function() {
+    res.end('success');
+  });
+  form.parse(req);
+});
+
+
 
 
 

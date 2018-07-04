@@ -38,10 +38,8 @@ function listenForEvent(stream) {
         console.log("recorder started");
      
         let chunks = [];
-        console.log("chunks array", chunks);
-        
+       
         mediaRecorder.ondataavailable = function(e) {
-          console.log('should be individual chunk data', chunks)
           chunks.push(e.data);
         };
         
@@ -60,19 +58,15 @@ function listenForEvent(stream) {
             console.log(blob);
             let myFile = new File([blob], "tstVideo", {type: 'video/webm\;codecs=vp8',
                                                     lastModified: Date.now()});
-            var upload = multer({
-              storage: Storage
-              }).array("imgUploader", 3);
 
             console.log(myFile);            
             
-            const tryVideo = myModule.(blob, "tst-video");
+            const tryVideo = myModule.saveAs(blob, "tst-video");
             const objectUrl = URL.createObjectURL(myFile);
+          
             
-            console.log(objectUrl);
-            
-            buildAPI(myFile);
-            submitFileToApi(myFile);
+            // buildAPI(myFile);
+            // submitFileToApi(myFile);
           }
         });
  
@@ -81,53 +75,101 @@ function listenForEvent(stream) {
     document.getElementById('btn-stop-recording').disabled = false;
   });
 }
+$('.upload-btn').on('click', function (){
+    $('#upload-input').click();
+    $('.progress-bar').text('0%');
+    $('.progress-bar').width('0%');
+});
 
+$('#upload-input').on('change', function(){
+  console.log('on change');
+  var files = $(this).get(0).files;
 
-function buildAPI(file) {
-  const settings = {
-    url: `api/upload`,
-    data: ``,
-    method: "GET",
-    success: (data) => 
-      console.log('success', data),
-    error: (err) => console.error(err)
+  if (files.length > 0){
+    // create a FormData object which will be sent as the data payload in the
+    // AJAX request
+    var formData = new FormData();
+
+    // loop through all the selected files and add them to the formData object
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+
+      // add the files to formData object for the data payload
+      formData.append('uploads[]', file, file.name);
+    }
+
+    $.ajax({
+      url: '/upload',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data){
+          console.log('upload successful!\n' + data);
+      },
+      xhr: function() {
+        // create an XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+
+        // listen to the 'progress' event
+        xhr.upload.addEventListener('progress', function(evt) {
+
+          if (evt.lengthComputable) {
+            // calculate the percentage of upload completed
+            var percentComplete = evt.loaded / evt.total;
+            percentComplete = parseInt(percentComplete * 100);
+
+            // update the Bootstrap progress bar with the new percentage
+            $('.progress-bar').text(percentComplete + '%');
+            $('.progress-bar').width(percentComplete + '%');
+
+            // once the upload reaches 100%, set the progress bar text to done
+            if (percentComplete === 100) {
+              $('.progress-bar').html('Done');
+            }
+
+          }
+
+        }, false);
+
+        return xhr;
+      }
+    });
+
+  }
+});
+// function buildAPI(file) {
+//   const settings = {
+//     url: `https://localhost:8080/api/upload`,
+//     data: ``,
+//     method: "POST",
+//     success: (data) => 
+//       console.log('success', data),
+//     error: (err) => console.error(err)
     
 
-  }
-}
+//   }
+// }
 
 
-function submitFileToApi(file) {
+// function submitFileToApi(file) {
   
-  console.log(file);
+//   console.log(file);
   
-  const settings = {
-    url: `https://api.kairos.com/v2/media?source=${file}`,
-    headers: {
-      "app_id": `${APP_ID}`,
-      "app_key": `${APP_KEY}`,
-    },
-    method: "POST",
-    success: function(data) {
-      console.log('success', data);
+//   const settings = {
+//     url: `https://api.kairos.com/v2/media?source=${file}`,
+//     headers: {
+//       "app_id": `${APP_ID}`,
+//       "app_key": `${APP_KEY}`,
+//     },
+//     method: "POST",
+//     success: function(data) {
+//       console.log('success', data);
 
-    },
-    error: function(error) {
-      console.error(error);
-    }
-  }
-  $.ajax(settings);
-}
-
-
-<script>
-    $(document).ready(function() {
-                var options = {
-                        beforeSubmit: showRequest, 
-                        // pre-submit callback success: showResponse 
-                        // post-submit callback }; 
-                        // bind to the form's submit event $('#frmUploader').submit(function () { $(this).ajaxSubmit(options); 
-                        // always return false to prevent standard browser submit and page navigation return false; }); }); 
-                        // pre-submit callback function showRequest(formData, jqForm, options) { alert('Uploading is starting.'); return true; } 
-                        // post-submit callback function showResponse(responseText, statusText, xhr, $form) { alert('status: ' + statusText + '\n\nresponseText: \n' + responseText ); }
-</script>
+//     },
+//     error: function(error) {
+//       console.error(error);
+//     }
+//   }
+//   $.ajax(settings);
+// }
