@@ -32,6 +32,7 @@ app.get('/', function(req, res){
 
 app.get('/api/resources/tempVideoStrg/:uid', function(req, res){
   var file = __dirname + `/api/resources/tempVideoStrg/${req.params.uid}`;
+  console.log(file);
   res.sendFile(file); // Set disposition and send it.
 });
 
@@ -41,7 +42,7 @@ app.post('/upload', function(req, res){
   form.multiples = true;
   form.uploadDir = path.join(__dirname, '/api/resources/tempVideoStrg');
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+    fs.rename(file.path, path.join(form.uploadDir, "name.webm"));
   });
   form.on('error', function(err) {
     console.log('An error has occured: \n' + err);
@@ -52,6 +53,14 @@ app.post('/upload', function(req, res){
   form.parse(req);
 });
 
+
+app.delete('/delete',function(req,res) {
+ 	const filePath = path.join(__dirname, '/api/resources/tempVideoStrg/name.webm');
+	fs.unlink(filePath, (err) => {
+  	if (err) throw err
+  	console.log('file was deleted');
+	});
+})
 
 
 

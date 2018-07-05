@@ -14,23 +14,35 @@
   crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="header">
+	<header role="banner" class="banner">
+		<h1 id="banner">Please take a 20 second video of yourself and how your day is going.</h1>
 
-<div id="button-area">
-	<button id="btn-start-recording">Start Recording</button>
-	<button id="btn-stop-recording" disabled>Stop Recording</button>
+	</header>
 </div>
-<hr>
-<div id="file-upload">
-	<div class="progress">
-    	<div class="progress-bar" role="progressbar"></div>
-    	<button class="btn btn-lg upload-btn" type="button">Upload File</button>
-    </div>
-	<video autoplay="true" id="videoElement"></video>
-	<input id="upload-input" type="file" name="uploads[]">
+<div class="main">
+	<main role="main">
+		<div class="ctrls">
+			<div id="button-area">
+				<button id="btn-start-recording">Start Recording</button>
+				<button id="btn-stop-recording" disabled>Stop Recording</button>
+			</div>
+			<div id="file-upload">
+				<div class="progress">
+			    	<div class="progress-bar" role="progressbar"></div>
+			    	<button class="btn btn-lg upload-btn" type="button">Upload File</button>
+			    </div>	
+				<input id="upload-input" type="file" name="uploads[]">
+			</div>
+		</div>
+		<div class="video">
+			<video autoplay="true" id="videoElement"></video>
+		</div>
+		<div class="end-sect">
+			<button id="end-btn" disabled>See Results</button>
+		</div>
+	</main>
 </div>
-
-
-
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
