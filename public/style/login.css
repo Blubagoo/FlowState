@@ -1,0 +1,10 @@
+#banner {
+	text-align: center;
+}
+fieldset {
+	border: none;
+}
+#form-area {
+	display: flex;
+	flex-direction: column;
+}

@@ -1,20 +1,36 @@
 'use strict';
 
 const express = require('express');
+const mongoose = require('mongoose');
+const appMiddleware = require('./middleware/middleware');
+const videoRoutes = require('./api/resources/tempVideoStrg/videoRoutes');
+const authRoutes = require('./api/resources/auth/authRouter');
+const {localStrategy, jwtStrategy} = require('./api/resources/auth/strategies');
+const userRoutes = require('./api/resources/users/userRoutes')
 const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
+const passport = require('passport');
+const {DATABASE_URL} = require('dotenv').config();
 
-const PORT = process.env.PORT || 8080;
-const router = express.Router();
 
-const appMiddleware = require('./middleware/middleware');
+
+mongoose.Promise = global.Promise;
 
 const app = express();
+mongoose.connect('mongodb://localhost:27017/users');
 
 appMiddleware(app);
 
 app.use(express.static('public'));
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use('/api/video', videoRoutes);
+app.use('/api/video/:id',videoRoutes);
+app.use('/api/users/', userRoutes);
+app.use('/api/auth/', authRoutes); 
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -26,50 +42,48 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, 'views/index.html'));
-});
-
-app.get('/api/resources/tempVideoStrg/:uid', function(req, res){
-  var file = __dirname + `/api/resources/tempVideoStrg/${req.params.uid}`;
-  console.log(file);
-  res.sendFile(file); // Set disposition and send it.
-});
-
-
-app.post('/upload', function(req, res){
-	var form = new formidable.IncomingForm();
-  form.multiples = true;
-  form.uploadDir = path.join(__dirname, '/api/resources/tempVideoStrg');
-  form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, "name.webm"));
-  });
-  form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
-  });
-  form.on('end', function() {
-    res.end('success');
-  });
-  form.parse(req);
-});
-
-
-app.delete('/delete',function(req,res) {
- 	const filePath = path.join(__dirname, '/api/resources/tempVideoStrg/name.webm');
-	fs.unlink(filePath, (err) => {
-  	if (err) throw err
-  	console.log('file was deleted');
-	});
-})
-
-
-
-
-
 if (require.main === module) {
   app.listen(process.env.PORT || 8080, function() {
     console.info(`App listening on ${this.address().port}`);
   });
 }
 
-module.exports = {app};
+let server;
+
+function runServer(databaseUrl, port = PORT) {
+
+  return new Promise((resolve, reject) => {
+    mongoose.connect(databaseUrl, err => {
+      if (err) {
+        return reject(err);
+      }
+      server = app.listen(port, () => {
+        console.log(`Your app is listening on port ${port}`);
+        resolve();
+      })
+        .on('error', err => {
+          mongoose.disconnect();
+          reject(err);
+        });
+    });
+  });
+}
+
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log('Closing server');
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  });
+}
+
+
+module.exports = {
+	app, runServer, closeServer
+};

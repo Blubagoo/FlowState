@@ -1,12 +1,13 @@
 // 'use strict';
-import * as myModule from '/FileSaver.js';
 
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
+
 let fileName = "name.webm";
+
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/resources/tempVideoStrg/${fileName}`;
 const LOCAL_URL = `localhost:8080/api/resources/tempVideoStrg/${fileName}`
-console.log(VIDEO_URL)
+
 function listenForUpload() {
   document.getElementByClass('upload-btn').disabled = true;
   $('#upload-input').on('click', () => {
@@ -115,7 +116,7 @@ function uploadToServer(myFile) {
       
 
     $.ajax({
-      url: '/upload',
+      url: '/api/video',
       type: 'POST',
       data: formData,
       processData: false,
@@ -161,9 +162,9 @@ function pageListener() {
   });
 }
 
-function deleteVideo() {
+function deleteVideo(id) {
   const settings = {
-    url: `/delete`,
+    url: `/api/video/${id}`,
     method: "DELETE",
     success: function(data) {
       console.log('success! it was deleted', data);
@@ -175,89 +176,6 @@ function deleteVideo() {
   $.ajax(settings);
 
 }
-
-
-$(runWebcam);
-
-
-
-// $('.upload-btn').on('click', function (){
-//     $('#upload-input').click();
-//     $('.progress-bar').text('0%');
-//     $('.progress-bar').width('0%');
-// });
-
-// $('#upload-input').on('change', function(){
-//   console.log('on change');
-//   var files = $(this).get(0).files;
-
-//   if (files.length > 0){
-//     // create a FormData object which will be sent as the data payload in the
-//     // AJAX request
-//     var formData = new FormData();
-
-//     // loop through all the selected files and add them to the formData object
-//     for (var i = 0; i < files.length; i++) {
-//       var file = files[i];
-
-//       // add the files to formData object for the data payload
-//       formData.append('uploads[]', file, file.name);
-//     }
-
-//     $.ajax({
-//       url: '/upload',
-//       type: 'POST',
-//       data: formData,
-//       processData: false,
-//       contentType: false,
-//       success: function(data){
-//           console.log('upload successful!\n' + data);
-//       },
-//       xhr: function() {
-//         // create an XMLHttpRequest
-//         var xhr = new XMLHttpRequest();
-
-//         // listen to the 'progress' event
-//         xhr.upload.addEventListener('progress', function(evt) {
-
-//           if (evt.lengthComputable) {
-//             // calculate the percentage of upload completed
-//             var percentComplete = evt.loaded / evt.total;
-//             percentComplete = parseInt(percentComplete * 100);
-
-//             // update the Bootstrap progress bar with the new percentage
-//             $('.progress-bar').text(percentComplete + '%');
-//             $('.progress-bar').width(percentComplete + '%');
-
-//             // once the upload reaches 100%, set the progress bar text to done
-//             if (percentComplete === 100) {
-//               $('.progress-bar').html('Done');
-//             }
-
-//           }
-
-//         }, false);
-
-//         return xhr;
-//       }
-//     });
-
-//   }
-// });
-
-
-// function buildAPI(file) {
-//   const settings = {
-//     url: `https://localhost:8080/api/upload`,
-//     data: ``,
-//     method: "POST",
-//     success: (data) => 
-//       console.log('success', data),
-//     error: (err) => console.error(err)
-    
-
-//   }
-// }
 
 
 function submitFileToApi(url) {
@@ -273,6 +191,7 @@ function submitFileToApi(url) {
     method: "POST",
     success: function(data) {
       console.log('success', data);
+      getAnalytics(data.id);
 
     },
     error: function(error) {
@@ -281,3 +200,24 @@ function submitFileToApi(url) {
   }
   $.ajax(settings);
 }
+
+function getAnalytics(id) {
+  const setting = {
+    url: `https://api.kairos.com/v2/media/${id}`,
+    headers: {
+      "app_id": `${APP_ID}`,
+      "app_key": `${APP_KEY}`,
+    },
+    method: "GET",
+    success: function(data) {
+      console.log('success', );
+    }
+
+  }
+}
+
+
+
+
+$(runWebcam);
+
