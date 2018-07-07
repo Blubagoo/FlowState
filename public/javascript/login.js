@@ -8,23 +8,24 @@ function listenForLogin() {
 	e.preventDefault();
 	console.log('button-pressed');
 
-	let username = $('#user-input').val();
-	let password = $('pass-input').val();
+	const username = $('#user-input').val();
+	const password = $('#pass-input').val();
 
 	$('#user-input').val('');
-	$('pass-input').val('');
+	$('#pass-input').val('');
 
-	authenticateUser(username, password)
-})
+	authenticateUser(username, password);
+});
 }
 //send to autenticate
 function authenticateUser(user, pass) {
+	console.log(user, pass)
 	console.log('trying to authenticate');
 	const settings = {
 		url:"/api/auth/login",
 		data:{
-			username: `blubagoo`,
-			password: `Joedanger02@`
+			username: `${user}`,
+			password: `${pass}`
 		},
 		method:"POST",
 		success: (data) => {
