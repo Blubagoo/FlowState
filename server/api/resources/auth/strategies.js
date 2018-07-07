@@ -48,7 +48,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
 
 const jwtStrategy = new JwtStrategy(
   {
-    secretOrKey: `${JWT_SECRET}`,
+    secretOrKey: `shade`,
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     algorithms: ['HS256']
   },
@@ -57,5 +57,5 @@ const jwtStrategy = new JwtStrategy(
     done(null, payload.user);
   }
 );
-
+console.log('JWT', JWT_SECRET);
 module.exports = { localStrategy, jwtStrategy };

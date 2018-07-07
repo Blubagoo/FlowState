@@ -11,7 +11,7 @@ const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
 const passport = require('passport');
-const {DATABASE_URL} = require('dotenv').config();
+const {DATABASE_URL,} = require('dotenv').config();
 
 
 
@@ -27,11 +27,6 @@ app.use(express.static('public'));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-app.use('/api/video', videoRoutes);
-app.use('/api/video/:id',videoRoutes);
-app.use('/api/users/', userRoutes);
-app.use('/api/auth/', authRoutes); 
-
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
@@ -40,7 +35,14 @@ app.use(function (req, res, next) {
     return res.send(204);
   }
   next();
-});
+})
+
+app.use('/api/video', videoRoutes);
+app.use('/api/video/:id',videoRoutes);
+app.use('/api/users/', userRoutes);
+app.use('/api/auth/', authRoutes); 
+
+;
 
 if (require.main === module) {
   app.listen(process.env.PORT || 8080, function() {

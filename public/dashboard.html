@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="Upload a picture and use facial recognition software that helps keep you on track">
+	<meta name="keywords" content="Upload Flowstate facial recognition software Kairos">
+	<link href="style/index.css" rel="stylesheet" type="text/css">
+	<link href="style/dashboard.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="../node_modules/chartist/dist/chartist.min.css">
+	<script src="../node_modules/chartist/dist/chartist.min.js"></script>
+
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+	<title>DashBoard</title>
+</head>
+<body>
+	<header>
+		<div class="header">
+			<img src="#" id="img=logo" alt="Flow-State Logo">
+			<h1 class="banner" role="banner">Dashboard</h1>
+			<a href="#">Logout</a>
+		</div>
+	</header>
+	<main role="main">
+		<div id="nav-area">
+			<ul>
+				<li>Make a prediction</li>
+				<li>Compare your your different moods to when you got the most progress done</li>
+			</ul>
+		</div>
+		<div class="main-area">
+			<div id="mood-graph" class="ct-chart ct-perfect-fourth">
+				<button id="graph-btn">graph it</button>
+			</div>
+			<div id="progress-graph">
+			</div>
+		</div>
+	</main>
+	<footer role="conent-info">
+		<p id="">Powered by <a href="#">Kairos</a>.</p>
+	</footer>
+
+
+<script src="javascript/dashboard.js"></script>  
+</body>
+</html>

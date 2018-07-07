@@ -3,10 +3,10 @@
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
-let fileName = "name.webm";
+let fileName = "video.webm";
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/resources/tempVideoStrg/${fileName}`;
-const LOCAL_URL = `localhost:8080/api/resources/tempVideoStrg/${fileName}`
+const LOCAL_URL = `localhost:8080/api/video/${fileName}`
 
 function listenForUpload() {
   document.getElementByClass('upload-btn').disabled = true;
@@ -123,7 +123,7 @@ function uploadToServer(myFile) {
       contentType: false,
       success: function(data){
           console.log('upload successful!\n' + data);
-          submitFileToApi(VIDEO_URL);
+          submitFileToApi(LOCAL_URL);
       },
       xhr: function() {
         // create an XMLHttpRequest
