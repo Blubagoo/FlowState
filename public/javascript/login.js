@@ -21,17 +21,17 @@ function listenForLogin() {
 function authenticateUser(user, pass) {
 	console.log('trying to authenticate');
 	const settings = {
-		url:"/api/auth/refresh",
+		url:"/api/auth/login",
 		data:{
-			username: `${user}`,
-			password: `${pass}`
+			username: `blubagoo`,
+			password: `Joedanger02@`
 		},
 		method:"POST",
 		success: (data) => {
 			console.log('authenticated user');
 			redirectWithToken(data.authToken, user);
 		},
-		error: (err) => console.error(err)
+		error: (err) => console.log(err)
 	}
 	$.ajax(settings);
 
