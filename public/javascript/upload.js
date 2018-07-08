@@ -119,7 +119,7 @@ function uploadToServer(myFile) {
     contentType: false,
     success: function(data){
         console.log('upload successful!\n' + data);
-        submitFileToApi(LOCAL_URL);
+        submitFileToApi(VIDEO_URL);
     },
     error: (err) => console.error(err)
   });
