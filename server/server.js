@@ -20,7 +20,7 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
-mongoose.connect('mongodb://blubago:Joedanger02@ds127771.mlab.com:27771/flow-state')
+mongoose.connect('mongodb://blubago:Joedanger02@@ds127771.mlab.com:27771/flow-state')
   .then(() => console.log('connected'))
   .catch(err => console.error(err));
 
