@@ -10,6 +10,9 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 //register new user
+
+
+
 router.post('/', jsonParser, (req, res) => {
 	console.log('post route targeted');
   const requiredFields = ['username', 'password'];
@@ -138,42 +141,17 @@ console.log('7');
     });
 });
 
-router.get('/', (req, res) => {
+
+
+
+//get id
+router.get('/:user', (req, res) => {
   
-  return User.find()
+  return User.find({username: `${req.params.user}`})
     .then(users => res.json(users.map(user => user.serialize())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
+
+
 module.exports = router;
-
-router.put("/token", (req, res) => {
-  const requiredFields = ['username', 'password'];
-
-  
-  for(let i = 0; i<requiredFields.length; i++) {
-    
-    let field = requiredFields[i];
-    
-    if(!(field in req.body)) {
-      return res.status(400).json({
-        "Message": `${field} not in request body`,
-        "Status": 400
-      });
-    };
-
-    const updated = {};
-    const updateableField = ['authToken'];
-    updateableField.forEach(field => {
-      if(field in req.body) {
-        updated[field] = req.body[field];
-      }
-    });
-
-    User
-      .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-      .then(updatedPost => res.status(204).send('Changed JWT Token').end())
-      .catch(err => res.status(500).send('Internal Server Error').end()); 
-
-  };
-});

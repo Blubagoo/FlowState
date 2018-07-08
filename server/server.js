@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const appMiddleware = require('./middleware/middleware');
 const videoRoutes = require('./api/resources/tempVideoStrg/videoRoutes');
 const authRoutes = require('./api/resources/auth/authRouter');
+const dataRoutes = require('./api/resources/users/userData/dataRoutes');
 const {localStrategy, jwtStrategy} = require('./api/resources/auth/strategies');
-const userRoutes = require('./api/resources/users/userRoutes')
+const userRoutes = require('./api/resources/users/userRoutes');
 const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
@@ -18,7 +19,10 @@ const {DATABASE_URL,} = require('dotenv').config();
 mongoose.Promise = global.Promise;
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/users');
+
+mongoose.connect('mongodb://localhost:27017/users')
+  .then(() => console.log('connected'))
+  .catch(err => console.error(err));
 
 appMiddleware(app);
 
@@ -40,7 +44,9 @@ app.use(function (req, res, next) {
 app.use('/api/video', videoRoutes);
 app.use('/api/video/:id',videoRoutes);
 app.use('/api/users/', userRoutes);
-app.use('/api/auth/', authRoutes); 
+// app.use('/api/users/analytics', dataRoutes)
+app.use('/api/auth/', authRoutes);
+
 
 ;
 

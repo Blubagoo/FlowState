@@ -25,10 +25,8 @@ function listenForLogin() {
 });
 }
 
-
-
 //send to autenticate
-function authenticateUser(user, pass) {
+function authenticateUser(user, pass,) {
 	var info = {
 		username: user,
 		password: pass
@@ -46,51 +44,32 @@ function authenticateUser(user, pass) {
 		method:"POST",
 		success: (data) => {
 			console.log('authenticated user');
-			redirectWithToken(data.authToken, user);
+			authenticateToken(data.authToken, user);
 		},
 		error: (err) => console.log(err)
 	}
 	$.ajax(settings);
-
-
-}
-//redirect upon success
-function redirectWithToken(jwt, user) {
-	console.log('updating users token');
-	updateDb(jwt);
-	authenticateToken(jwt, user);
 }
 
-function updateDb(jwt) {
-	console.log('updating database');
-	const settings = {
-		url: `/api/users/token`,
-		data: {
-			authToken: `${jwt}`
-		},
-		method: "PUT",
-		dataType: "json",
-		success: (data) => {
-			console.log('success we have updated the db', data);
-		},
-		error: (err) => {
-			console.error(err);
-		}
-	};
-	
-	$.ajax(settings);
-}
 
 function authenticateToken(jwt, user) {
+	console.log('trying to authenticate');
 	const settings = {
-		url: `api/auth/dashboard/${user}`,
+		url: `api/auth/dashboard/${user}/${jwt}`,
 		headers: {
 			Authorization: `Bearer ${jwt}`
 		},
+		success: (data) => {
+			console.log('success', data);
+			window.location = data.url;
+		},
+		error: (err) => console.error(err)
 
 	};
 	$.ajax(settings);
 }
+
+
 
 $(listenForLogin);
 

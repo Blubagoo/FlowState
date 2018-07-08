@@ -23,6 +23,7 @@ router.use(bodyParser.json());
 
 router.post('/login', localAuth, (req, res) => {
   const authToken = createAuthToken(req.user.serialize());
+  let username = req.body.username;
   res.json({authToken});
 });
 
@@ -34,8 +35,13 @@ router.post('/refresh', jwtAuth, (req, res) => {
 	res.json({authToken});
 });
 
-router.get('/dashboard/:user', jwtAuth, (req, res) => {
-	res.redirect(`https:flow-state.herokuapp.com/dashboard/${req.params.user}`);
+router.get('/dashboard/:user/:jwt', jwtAuth, (req, res) => {
+  console.log('redirecting')
+	res.status(200).json({url: `http://localhost:8080/dashboard.html?username=${req.params.user}`});   
+})
+router.get('/private', (req, res) => {
+  console.log('going to dashboard');
+  res.location("http://localhost:8080/dashboard.html");
 })
 
 module.exports = router;

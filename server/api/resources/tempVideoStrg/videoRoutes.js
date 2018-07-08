@@ -5,9 +5,7 @@ const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
 
-console.log('getting stuck i think');
 const router = express.Router();
-
 
 router.get('/:id', function(req, res){
   console.log('get route targeted');

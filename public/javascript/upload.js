@@ -5,7 +5,7 @@ const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
 let fileName = "video.webm";
 
-const VIDEO_URL = `https://flow-state.herokuapp.com/api/resources/tempVideoStrg/${fileName}`;
+const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${fileName}`;
 const LOCAL_URL = `localhost:8080/api/video/${fileName}`
 
 function listenForUpload() {
@@ -110,51 +110,20 @@ function uploadToServer(myFile) {
   var formData = new FormData();
   formData.append('uploads[]',myFile, "video.webm");
   console.log(formData);
-    
 
-      // add the files to formData object for the data payload
-      
-
-    $.ajax({
-      url: '/api/video',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(data){
-          console.log('upload successful!\n' + data);
-          submitFileToApi(VIDEO_URL);
-      },
-      xhr: function() {
-        // create an XMLHttpRequest
-        var xhr = new XMLHttpRequest();
-
-        // listen to the 'progress' event
-        xhr.upload.addEventListener('progress', function(evt) {
-
-          if (evt.lengthComputable) {
-            // calculate the percentage of upload completed
-            var percentComplete = evt.loaded / evt.total;
-            percentComplete = parseInt(percentComplete * 100);
-
-            // update the Bootstrap progress bar with the new percentage
-            $('.progress-bar').text(percentComplete + '%');
-            $('.progress-bar').width(percentComplete + '%');
-
-            // once the upload reaches 100%, set the progress bar text to done
-            if (percentComplete === 100) {
-              $('.progress-bar').html('Done');
-            }
-
-          }
-
-        }, false);
-
-        return xhr;
-      }
-    });
+  $.ajax({
+    url: '/api/video',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(data){
+        console.log('upload successful!\n' + data);
+        submitFileToApi(LOCAL_URL);
+    },
+    error: (err) => console.error(err)
+  });
 }
-
 
 function pageListener() {
   $('#end-btn').on('click', function() {
@@ -201,8 +170,27 @@ function submitFileToApi(url) {
   $.ajax(settings);
 }
 
+function serialize(data) {
+  return {
+    date: Date.now(),
+    anger: data.impressions.average_emotion.anger,
+    disgust: data.impressions.average_emotion.disgust,
+    fear: data.impressions.average_emotion.fear,
+    joy: data.impressions.average_emotion.joy,
+    sadness: data.impressions.average_emotion.sadness,
+    surprise: data.impressions.average_emotion.surprise, 
+    glances: data.impressions.tracking.glances,
+    dwell: data.impressions.tracking.dwell,
+    attention: data.impressions.tracking.attention,
+    positive: data.impressions.emotion_score.positive,
+    negative: data.impressions.emotion_score.negative,
+    neutral: data.impressions.emotion_score.neutral
+  };
+};
+
+
 function getAnalytics(id) {
-  const setting = {
+  const settings = {
     url: `https://api.kairos.com/v2/media/${id}`,
     headers: {
       "app_id": `${APP_ID}`,
@@ -210,10 +198,27 @@ function getAnalytics(id) {
     },
     method: "GET",
     success: function(data) {
-      console.log('success', );
-    }
+      console.log('success', data);
+      postAnalytics(data);
+    },
+    error: (err) => console.error(err)
+  };
+  $.ajax(settings);
+}
 
-  }
+function postAnalytics(obj) {
+  let username = window.location.href.split("?")[1];
+  const settings = {
+    url: `/api/users/${username}`,
+    method: 'POST',
+    data: serialize(obj),
+    success: (data) => {
+      console.log('updated database');
+      // window.logcation = dashboard.html;
+    },
+    error: (err) => console.error(err)
+  };
+  $.ajax(settings);
 }
 
 
