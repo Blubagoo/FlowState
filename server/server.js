@@ -20,9 +20,9 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
-mongoose.connect("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state")
-  .then(() => console.log('connected'))
-  .catch(err => console.error('there was a connection error', err));
+// mongoose.connect("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state")
+//   .then(() => console.log('connected'))
+//   .catch(err => console.error('there was a connection error', err));
 
 appMiddleware(app);
 
