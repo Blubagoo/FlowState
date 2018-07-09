@@ -26,6 +26,7 @@ function getUsername() {
 	let username = url.split("username=")[1];
 	console.log(username);
 	callForAnalytics(username);
+	callForData(username);
 
 
 }
@@ -36,17 +37,19 @@ function callForAnalytics(user) {
 		url: `/api/users/analytics/${user}`,
 		success: (data) => {
 			console.log('got data analytics', data);
+			makeGraphOverall(data);
 		},
 		error: (err) => console.error(err)
 	};
 	$.ajax(settings);
 }
-function callForData(data) {
+function callForData(user) {
 	console.log('going for video data');
 	const settings = {
-		url: `/api/users/analytics/${user}`,
+		url: `/api/users/analytics/dynamic/${user}`,
 		success: (data) => {
 			console.log('got data video', data);
+			makeGraphRecentVideo(data);
 		},
 		error: (err) => console.error(err)
 	};
@@ -56,7 +59,10 @@ function callForData(data) {
 
 		
 function makeGraphOverall(data) {
-	console.log('button pressed');
+	let mapDocs = data.map(doc => {
+		return doc;
+	})
+	console.log(mapDocs);
 	var data = {
 	  labels: ['date', 'date', 'date', 'date', 'date'],
 	  series: [
@@ -67,14 +73,40 @@ function makeGraphOverall(data) {
 	console.log('new overall graph made');
 }
 
-
+var anger = [];
+var disgust = [];
+var fear = [];
+var joy = [];
+var sadness = [];
+var surprise = [];
+var date = [];
 
 function makeGraphRecentVideo(data) {
-	console.log('button pressed');
+	let mapVid = data[0].frames.map(frame => {
+		let angr = frame.anger;
+		anger.push(angr);
+		let dsgst = frame.disgust;
+		disgust.push(dsgst);
+		let fr = frame.fear;
+		fear.push(fr);
+		let jy = frame.joy;
+		joy.push(jy);
+		let sad = frame.sadness;
+		sadness.push(sad);
+		let srprise = frame.surprise;
+		surprise.push(srprise);
+
+	})
+	console.log(anger);
 	var data = {
 	  labels: ['date', 'date', 'date', 'date', 'date'],
 	  series: [
-	    [5, 2, 4, 2, 0]
+	    anger,
+	    disgust,
+	    fear,
+	    joy,
+	    sadness,
+	    surprise
 	  ],
 	};
 	new Chartist.Line('.ct-chart', data);
@@ -82,6 +114,5 @@ function makeGraphRecentVideo(data) {
 }
 
 $(getUsername);
-$(makeGraph);
 
 
