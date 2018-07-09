@@ -37,7 +37,7 @@ router.post('/refresh', jwtAuth, (req, res) => {
 
 router.get('/dashboard/:user/:jwt', jwtAuth, (req, res) => {
   console.log('redirecting')
-	res.status(200).json({url: `http://localhost:8080/dashboard.html?username=${req.params.user}`});   
+	res.status(200).json({url: `https://flow-state.herokuapp.com/dashboard.html?username=${req.params.user}`});   
 })
 router.get('/private', (req, res) => {
   console.log('going to dashboard');
