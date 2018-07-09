@@ -12,6 +12,7 @@ const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
 const passport = require('passport');
+const PORT = process.env.PORT || 3000;
 
 
 
@@ -47,16 +48,10 @@ app.use('/api/auth/', authRoutes);
 
 ;
 
-if (require.main === module) {
-  app.listen(process.env.PORT || 8080, function() {
-    console.info(`App listening on ${this.address().port}`);
-    runServer("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state").catch(err => console.error(err));
-  });
-}
 
 let server;
 
-function runServer(databaseUrl, port = PORT) {
+function runServer(databaseUrl, port = 8080) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
@@ -64,7 +59,7 @@ function runServer(databaseUrl, port = PORT) {
         return reject(err);
       }
       server = app.listen(port, () => {
-        console.log(`Your app is listening on port ${port}`);
+        console.log(`Your app is listening on port inside Promise ${port}`);
         resolve();
       })
         .on('error', err => {
@@ -89,6 +84,9 @@ function closeServer() {
   });
 }
 
+if (require.main === module) {
+    runServer("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state").catch(err => console.error(err));
+  };
 
 module.exports = {
 	app, runServer, closeServer
