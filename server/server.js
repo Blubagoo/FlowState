@@ -12,7 +12,7 @@ const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
 const passport = require('passport');
-const {DATABASE_URL,} = require('dotenv').config();
+
 
 
 
@@ -54,6 +54,7 @@ app.use('/api/auth/', authRoutes);
 if (require.main === module) {
   app.listen(process.env.PORT || 8080, function() {
     console.info(`App listening on ${this.address().port}`);
+    runServer("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state").catch(err => console.error(err));
   });
 }
 
