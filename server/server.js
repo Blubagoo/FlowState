@@ -40,7 +40,6 @@ app.use(function (req, res, next) {
 
 
 app.use('/api/video', videoRoutes);
-app.use('/api/video/:id',videoRoutes);
 app.use('/api/users/', userRoutes);
 app.use('/api/users/analytics', dataRoutes)  
 app.use('/api/auth/', authRoutes);
