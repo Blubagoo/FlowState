@@ -59,30 +59,56 @@ function callForData(user) {
 
 		
 function makeGraphOverall(data) {
+	let anger = [];
+	let disgust = [];
+	let fear = [];
+	let joy = [];
+	let sadness = [];
+	let surprise = [];
+	let date = [];
+	
 	let mapDocs = data.map(doc => {
-		return doc;
-	})
-	console.log(mapDocs);
+		let angr = doc.anger;
+		anger.push(angr);
+		let dsgst = doc.disgust;
+		disgust.push(dsgst);
+		let fr = doc.fear;
+		fear.push(fr);
+		let jy = doc.joy;
+		joy.push(jy);
+		let sad = doc.sadness;
+		sadness.push(sad);
+		let srprise = doc.surprise;
+		surprise.push(srprise);
+	});
+
 	var data = {
-	  labels: ['date', 'date', 'date', 'date', 'date'],
+	  labels: date,
 	  series: [
-	    [5, 2, 4, 2, 0]
-	  ],
+	    anger,
+	    disgust,
+	    fear,
+	    joy,
+	    sadness,
+	    surprise
+	    ]
 	};
-	new Chartist.Line('.ct-chart', data);
+	new Chartist.Line('#progress-graph', data);
 	console.log('new overall graph made');
 }
 
-var anger = [];
-var disgust = [];
-var fear = [];
-var joy = [];
-var sadness = [];
-var surprise = [];
-var date = [];
+
 
 function makeGraphRecentVideo(data) {
-	let mapVid = data[0].frames.map(frame => {
+	let anger = [];
+	let disgust = [];
+	let fear = [];
+	let joy = [];
+	let sadness = [];
+	let surprise = [];
+	let date = [];
+
+	let mapVid = data[data.length - 1].frames.map(frame => {
 		let angr = frame.anger;
 		anger.push(angr);
 		let dsgst = frame.disgust;
@@ -95,9 +121,8 @@ function makeGraphRecentVideo(data) {
 		sadness.push(sad);
 		let srprise = frame.surprise;
 		surprise.push(srprise);
-
-	})
-	console.log(anger);
+	});
+	
 	var data = {
 	  labels: ['date', 'date', 'date', 'date', 'date'],
 	  series: [
@@ -109,7 +134,7 @@ function makeGraphRecentVideo(data) {
 	    surprise
 	  ],
 	};
-	new Chartist.Line('.ct-chart', data);
+	new Chartist.Line('#mood-graph', data);
 	console.log('new overall graph made');
 }
 
