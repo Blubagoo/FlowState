@@ -122,7 +122,7 @@ function makeGraphRecentVideo(data) {
 		let srprise = frame.surprise;
 		surprise.push(srprise);
 	});
-	
+
 	var data = {
 	  labels: ['date', 'date', 'date', 'date', 'date'],
 	  series: [
