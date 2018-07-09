@@ -12,12 +12,6 @@ function listenForLogin() {
 	const username = $('#user-input').val().trim();
 	const password = $('#pass-input').val().trim();
 
-	let json = {};
-	json.username = username;
-	json.password = password;
-
-	console.log(json);
-
 	$('#user-input').val('');
 	$('#pass-input').val('');
 
@@ -26,12 +20,11 @@ function listenForLogin() {
 }
 
 //send to autenticate
-function authenticateUser(user, pass,) {
+function authenticateUser(user, pass) {
 	var info = {
 		username: user,
 		password: pass
 	};
-	console.log(info)
 	const settings = {
 		url:"/api/auth/login",
 		headers: {
