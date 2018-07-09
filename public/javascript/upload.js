@@ -7,7 +7,6 @@ const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 let username = window.location.href.split("username=")[1];
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}`;
-const LOCAL_URL = `localhost:8080/api/video/${fileName}`
 
 function listenForUpload() {
   document.getElementByClass('upload-btn').disabled = true;
