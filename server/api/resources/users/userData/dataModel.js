@@ -22,7 +22,7 @@ const DataSchema = mongoose.Schema({
 	positive: Number,
 	negative: Number,
 	neutral: Number
-	});
+});
 
 
 DataSchema.methods.serialize = function() {
