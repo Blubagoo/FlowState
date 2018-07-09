@@ -2,13 +2,19 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const {app} = require('../server/server.js');
+const {app, runServer, closeServer} = require('../server/server.js');
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
 describe('index page', function() {
+	before(function() {
+		runServer();
+	});
+	after(function() {
+		closeServer();
+	})
 
 	it('should exist', function() {
 
