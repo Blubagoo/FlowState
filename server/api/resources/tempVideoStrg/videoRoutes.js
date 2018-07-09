@@ -21,7 +21,7 @@ router.post('/:user', function(req, res){
   form.uploadDir = path.join(__dirname, '/');
   let fileName = `${req.params.user}-${Date.now}`
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, req.params.user + ".webm"));
+    fs.rename(file.path, path.join(form.uploadDir, req.params.user));
 
   });
   form.on('error', function(err) {
