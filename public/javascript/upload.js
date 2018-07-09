@@ -3,9 +3,10 @@
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
-let fileName = "video.webm";
 
-const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${fileName}`;
+let username = window.location.href.split("username=")[1];
+
+const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}`;
 const LOCAL_URL = `localhost:8080/api/video/${fileName}`
 
 function listenForUpload() {
@@ -112,7 +113,7 @@ function uploadToServer(myFile) {
   console.log(formData);
 
   $.ajax({
-    url: '/api/video',
+    url: `/api/video/${username}`,
     type: 'POST',
     data: formData,
     processData: false,
@@ -131,9 +132,9 @@ function pageListener() {
   });
 }
 
-function deleteVideo(id) {
+function deleteVideo(user) {
   const settings = {
-    url: `/api/video/${id}`,
+    url: `/api/video/${user}`,
     method: "DELETE",
     success: function(data) {
       console.log('success! it was deleted', data);
@@ -160,7 +161,10 @@ function submitFileToApi(url) {
     method: "POST",
     success: function(data) {
       console.log('success', data);
-      getAnalytics(data.id);
+      setTimeout(()=>{
+        getAnalytics(data.id);
+        getVideoData(data.id);
+      }, 11000);
 
     },
     error: function(error) {
@@ -170,26 +174,81 @@ function submitFileToApi(url) {
   $.ajax(settings);
 }
 
-function serialize(data) {
+function serializeOverall(data) {
+  console.log('before serialize',data);
+  let username = window.location.href.split("username=")[1];
+
   return {
-    date: Date.now(),
-    anger: data.impressions.average_emotion.anger,
-    disgust: data.impressions.average_emotion.disgust,
-    fear: data.impressions.average_emotion.fear,
-    joy: data.impressions.average_emotion.joy,
-    sadness: data.impressions.average_emotion.sadness,
-    surprise: data.impressions.average_emotion.surprise, 
-    glances: data.impressions.tracking.glances,
-    dwell: data.impressions.tracking.dwell,
-    attention: data.impressions.tracking.attention,
-    positive: data.impressions.emotion_score.positive,
-    negative: data.impressions.emotion_score.negative,
-    neutral: data.impressions.emotion_score.neutral
+    user: username,
+    anger: data.average_emotion.anger,
+    disgust: data.average_emotion.disgust,
+    fear: data.average_emotion.fear,
+    joy: data.average_emotion.joy,
+    sadness: data.average_emotion.sadness,
+    surprise: data.average_emotion.surprise, 
+    glances: data.tracking.glances,
+    dwell: data.tracking.dwell,
+    attention: data.tracking.attention,
+    positive: data.emotion_score.positive,
+    negative: data.emotion_score.negative,
+    neutral: data.emotion_score.neutral
   };
 };
+function convertOverallData(data) {
+  console.log('before conver of overall', data);  
+  let analytics = data.impressions[0];
+  let info = serializeOverall(analytics);
 
+  postAnalytics(info);
+}
+
+function serializeVideoData(data) {
+  return {
+    anger: data.emotions.anger,
+    disgust: data.emotions.disgust,
+    fear: data.emotions.fear,
+    joy: data.emotions.joy,
+    sadness: data.emotions.sadness,
+    surprise: data.emotions.surprise, 
+  };
+}
+
+function convertVideoData(data) {
+  console.log('before convert of video frames', data);
+  let videoFrame = data.frames.map(frame => {
+    let dynamic = frame.people[0];
+    let dynamicData = serializeVideoData(dynamic);
+    return dynamicData;
+  });
+  let dataObject = {
+    user: username,
+    frames: videoFrame
+  };
+
+
+
+  postVideoData(dataObject);
+
+}
 
 function getAnalytics(id) {
+  const settings = {
+    url: `https://api.kairos.com/v2/analytics/${id}`,
+    headers: {
+      "app_id": `${APP_ID}`,
+      "app_key": `${APP_KEY}`,
+    },
+    method: "GET",
+    success: function(data) {
+      console.log('success on grabbing the data', data);
+      convertOverallData(data);
+      deleteVideo(username);
+    },
+    error: (err) => console.error(err)
+  };
+  $.ajax(settings);
+}
+function getVideoData(id) {
   const settings = {
     url: `https://api.kairos.com/v2/media/${id}`,
     headers: {
@@ -198,20 +257,42 @@ function getAnalytics(id) {
     },
     method: "GET",
     success: function(data) {
-      console.log('success', data);
-      postAnalytics(data);
+      console.log('success on grabbing the video data', data);
+      convertVideoData(data);
+    },
+    error: (err) => console.error(err)
+  };
+  $.ajax(settings);  
+}
+
+function postAnalytics(obj) {
+  const settings = {
+    url: `/api/users/analytics/${username}`,
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: 'POST',
+    contentType: "apllication/json",
+    data: JSON.stringify(obj),
+    success: (data) => {
+      console.log('updated database');
+      // window.logcation = dashboard.html;
     },
     error: (err) => console.error(err)
   };
   $.ajax(settings);
 }
 
-function postAnalytics(obj) {
-  let username = window.location.href.split("?")[1];
+function postVideoData(obj) {
+
   const settings = {
-    url: `/api/users/${username}`,
+    url: `/api/users/analytics/videoData/${username}`,
+    headers: {
+      "Content-Type": "application/json"
+    },
     method: 'POST',
-    data: serialize(obj),
+    contentType: "apllication/json",
+    data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');
       // window.logcation = dashboard.html;

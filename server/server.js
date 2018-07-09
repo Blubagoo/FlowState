@@ -20,9 +20,9 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
-mongoose.connect('mongodb://blubago:Joedanger02@@ds127771.mlab.com:27771/flow-state')
+mongoose.connect("mongodb://server:Joedanger02@ds127771.mlab.com:27771/flow-state")
   .then(() => console.log('connected'))
-  .catch(err => console.error(err));
+  .catch(err => console.error('there was a connection error', err));
 
 appMiddleware(app);
 
@@ -41,10 +41,12 @@ app.use(function (req, res, next) {
   next();
 })
 
+
+
 app.use('/api/video', videoRoutes);
 app.use('/api/video/:id',videoRoutes);
 app.use('/api/users/', userRoutes);
-// app.use('/api/users/analytics', dataRoutes)
+app.use('/api/users/analytics', dataRoutes)  
 app.use('/api/auth/', authRoutes);
 
 

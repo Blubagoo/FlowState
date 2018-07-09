@@ -14,13 +14,15 @@ router.get('/:id', function(req, res){
   res.sendFile(file); // Set disposition and send it.
 });
 
-router.post('/', function(req, res){
+router.post('/:user', function(req, res){
   console.log('post working');
   var form = new formidable.IncomingForm();
   form.multiples = true;
   form.uploadDir = path.join(__dirname, '/');
+  let fileName = `${req.params.user}-${Date.now}`
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, 'video.webm'));
+    fs.rename(file.path, path.join(form.uploadDir, req.params.user + ".webm"));
+
   });
   form.on('error', function(err) {
     console.log('An error has occured: \n' + err);
@@ -31,9 +33,9 @@ router.post('/', function(req, res){
   form.parse(req);
 });
 
-router.delete('/', function(req,res) {
+router.delete('/:user', function(req,res) {
   console.log('trying to delete');
-  const filePath = path.join(__dirname, `/names.webm`);
+  const filePath = path.join(__dirname, `/${req.params.user}.webm`);
   fs.unlink(filePath, (err) => {
     if (err) throw err
     console.log('file was deleted');

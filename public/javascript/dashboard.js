@@ -23,19 +23,30 @@ const serialize = function() {
 // get username
 function getUsername() {
 	let url = window.location.href;
-	let username = url.split("?")[1];
+	let username = url.split("username=")[1];
 	console.log(username);
-	callForData(username);
+	callForAnalytics(username);
 
 
 }
 // call for data
-function callForData(user) {
-	console.log('going for data');
+function callForAnalytics(user) {
+	console.log('going for overall analytics');
 	const settings = {
 		url: `/api/users/analytics/${user}`,
 		success: (data) => {
-			console.log('got data', data);
+			console.log('got data analytics', data);
+		},
+		error: (err) => console.error(err)
+	};
+	$.ajax(settings);
+}
+function callForData(data) {
+	console.log('going for video data');
+	const settings = {
+		url: `/api/users/analytics/${user}`,
+		success: (data) => {
+			console.log('got data video', data);
 		},
 		error: (err) => console.error(err)
 	};
@@ -44,23 +55,30 @@ function callForData(user) {
 // display data 
 
 		
-function makeGraph() {
-	$('#graph-btn').on('click', function(e) {
-		console.log('button pressed')
-		e.preventDefault();
-		var data = {
-		  
-		  labels: ['date', 'date', 'date', 'date', 'date'],
-		  // Our series array that contains series objects or in this case series data arrays
-		  series: [
-		    [5, 2, 4, 2, 0]
-		  ],
+function makeGraphOverall(data) {
+	console.log('button pressed');
+	var data = {
+	  labels: ['date', 'date', 'date', 'date', 'date'],
+	  series: [
+	    [5, 2, 4, 2, 0]
+	  ],
+	};
+	new Chartist.Line('.ct-chart', data);
+	console.log('new overall graph made');
+}
 
-		};
-		new Chartist.Line('.ct-chart', data);
-		console.log('new graph made');
-	})
 
+
+function makeGraphRecentVideo(data) {
+	console.log('button pressed');
+	var data = {
+	  labels: ['date', 'date', 'date', 'date', 'date'],
+	  series: [
+	    [5, 2, 4, 2, 0]
+	  ],
+	};
+	new Chartist.Line('.ct-chart', data);
+	console.log('new overall graph made');
 }
 
 $(getUsername);
