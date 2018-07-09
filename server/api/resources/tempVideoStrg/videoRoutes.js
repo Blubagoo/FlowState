@@ -19,9 +19,8 @@ router.post('/:user', function(req, res){
   var form = new formidable.IncomingForm();
   form.multiples = true;
   form.uploadDir = path.join(__dirname, '/');
-  let fileName = `${req.params.user}-${Date.now}`
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, req.params.user));
+    fs.rename(file.path, path.join(form.uploadDir, req.params.user + ".webm"));
 
   });
   form.on('error', function(err) {

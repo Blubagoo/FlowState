@@ -51,14 +51,14 @@ app.use('/api/auth/', authRoutes);
 
 let server;
 
-function runServer(databaseUrl, port = 8080) {
+function runServer(databaseUrl, port) {
 
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
         return reject(err);
       }
-      server = app.listen(port, () => {
+      server = app.listen(PORT, () => {
         console.log(`Your app is listening on port inside Promise ${port}`);
         resolve();
       })
