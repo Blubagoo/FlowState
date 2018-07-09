@@ -8,7 +8,7 @@ const jsonParser = bodyParser.json();
 mongoose.Promise = global.Promise;
 
 const {Data} = require('./dataModel');
-const {Dynamic} =require('./DynamicDataModel');
+const {Dynamic} = require('./DynamicDataModel');
 
 const router = express.Router();
 
