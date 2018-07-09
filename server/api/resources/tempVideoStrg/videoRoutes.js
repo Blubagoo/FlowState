@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/:id', function(req, res){
   console.log('get route targeted');
-  var file = __dirname + `/${req.params.id}.webm`;
+  var file = __dirname + `/${req.params.id}`;
   console.log(file);
   res.sendFile(file); // Set disposition and send it.
 });
