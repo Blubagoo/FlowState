@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="Upload a picture and use facial recognition software that helps keep you on track">
+	<meta name="keywords" content="Upload Flowstate facial recognition software Kairos">
+	<link href="style/index.css" rel="stylesheet" type="text/css">
+	<link href="style/dashboard.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="chartist.min.css">
+	<script src="chartist.min.js"></script>
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+
+	<title>Register New User</title>
+</head>
+<body>
+	<header role="banner">
+		<h2 class="banner">Sign up below</h2>
+	</header>
+	<main role="main">
+		<form>
+			<legend>
+				<fieldset>
+					<label for="username">Username</label>
+					<input name="username" required type="text" id="user-input" placeholder="Rocket-Joe">
+					<label for="password">Password</label>
+					<input type="password" required name="password" id="pass-input" placeholder="********">
+					<label for="fname">First name</label>
+					<input type="text" name="fname" id="fname-input" placeholder="Joe">
+					<label for="lname">Last name</label>
+					<input name="lname" type="text" id="lname-input" placeholder="Schmo">
+					<button id="submit-btn">Submit</button>
+				</fieldset>
+			</legend>
+		</form>
+	</main>
+	<footer role="content-info">
+	</footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="javascript/register.js"></script>
+</body>
+</html>

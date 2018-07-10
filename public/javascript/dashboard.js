@@ -26,6 +26,7 @@ function checkAuthentication() {
 }
 
 function listenForNewVideo(user) {
+	console.log('listening for new video')
 	$('#new-btn').on('click', ()=> {
 		window.location = `https://flow-state.herokuapp.com/upload.html?username=${user}`;
 	})
@@ -155,22 +156,22 @@ function makeGraphRecentVideo(data) {
 	let surprise = [];
 	let date = [];
 
-	let mapVid = data[data.length - 1].frames.map(frame => {
-		let angr = frame.anger;
-		anger.push(angr);
-		let dsgst = frame.disgust;
-		disgust.push(dsgst);
-		let fr = frame.fear;
-		fear.push(fr);
-		let jy = frame.joy;
-		joy.push(jy);
-		let sad = frame.sadness;
-		sadness.push(sad);
-		let srprise = frame.surprise;
-		surprise.push(srprise);
-	});
-
-	var data = {
+	if(data === !undefined){
+		let mapVid = data[data.length - 1].frames.map(frame => {
+			let angr = frame.anger;
+			anger.push(angr);
+			let dsgst = frame.disgust;
+			disgust.push(dsgst);
+			let fr = frame.fear;
+			fear.push(fr);
+			let jy = frame.joy;
+			joy.push(jy);
+			let sad = frame.sadness;
+			sadness.push(sad);
+			let srprise = frame.surprise;
+			surprise.push(srprise);
+		});
+		var data = {
 	  labels: ['date', 'date', 'date', 'date', 'date'],
 	  series: [
 	    anger,
@@ -183,6 +184,9 @@ function makeGraphRecentVideo(data) {
 	};
 	new Chartist.Line('#mood-graph', data);
 	console.log('new overall graph made');
+	}
+
+	
 }
 
 
