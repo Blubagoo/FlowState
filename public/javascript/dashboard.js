@@ -26,10 +26,11 @@ function checkAuthentication() {
 }
 
 function listenForNewVideo(user) {
-	console.log('listening for new video')
-	$('#new-btn').on('click', ()=> {
+	console.log('listening for new video');
+	$('#newBtn').on('click', function() {
+		console.log('pressing button');
 		window.location = `https://flow-state.herokuapp.com/upload.html?username=${user}`;
-	})
+	});
 }
 
 

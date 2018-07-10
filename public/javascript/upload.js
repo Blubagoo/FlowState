@@ -3,6 +3,7 @@
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
+$('#animation').hide();
 
 let username = window.location.href.split("username=")[1];
 
@@ -281,7 +282,6 @@ function postAnalytics(obj) {
     data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');
-      // window.logcation = dashboard.html;
     },
     error: (err) => console.error(err)
   };
