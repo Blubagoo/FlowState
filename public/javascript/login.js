@@ -16,6 +16,7 @@ function listenForLogin() {
 	$('#pass-input').val('');
 
 	authenticateUser(username, password);
+
 });
 }
 
@@ -26,7 +27,7 @@ function authenticateUser(user, pass) {
 		password: pass
 	};
 	const settings = {
-		url:"/api/auth/login",
+		url:`/api/auth/login/${user}`,
 		headers: {
 			"Content-Type": "application/json" 
 		},
@@ -37,30 +38,28 @@ function authenticateUser(user, pass) {
 		method:"POST",
 		success: (data) => {
 			console.log('authenticated user');
-			authenticateToken(data.authToken, user);
+			setLocalStorageVariables(user, data.authToken, data.url);
 		},
 		error: (err) => console.log(err)
 	}
 	$.ajax(settings);
 }
+function setLocalStorageVariables(username, JWT_TOKEN, url) {	
+	let users = {};
+	Object.assign(users, {
+		user: username,
+		jwt: JWT_TOKEN,
+		authenticated: true
+	});
 
-
-function authenticateToken(jwt, user) {
-	console.log('trying to authenticate');
-	const settings = {
-		url: `api/auth/dashboard/${user}/${jwt}`,
-		headers: {
-			Authorization: `Bearer ${jwt}`
-		},
-		success: (data) => {
-			console.log('success', data);
-			window.location = data.url;
-		},
-		error: (err) => console.error(err)
-
-	};
-	$.ajax(settings);
+	let jsonReady = JSON.stringify(users);
+	console.log(users);
+	localStorage.setItem(`user${username}`, jsonReady);
+	console.log(JSON.parse(localStorage[`user${username}`]));
+	window.location = url;
 }
+
+
 
 
 

@@ -1,5 +1,35 @@
 'use strict';
+//check local storage for authentication
+function checkAuthentication() {
+	let username = getUsername();
+	//if not authenticated redirect
+	if(localStorage[`user${username}`] == null) {
+		window.location = "https://flow-state.herokuapp.com/login.html";
+	}
+	
+	let localStore = JSON.parse(localStorage[`user${username}`])
+	$.ajax({
+		url: '/api/auth',
+		headers: {
+			"Authorization": `Bearer ${localStore.jwt}`
+		},
+		success: () => {
+			callForAnalytics(username);
+			callForData(username);
+			listenForNewVideo(username);
+		},
+		error: () => {
+			window.location = "https://flow-state.herokuapp.com/login.html";
+		}
+	})
 
+}
+
+function listenForNewVideo(user) {
+	$('#new-btn').on('click', ()=> {
+		window.location = `https://flow-state.herokuapp.com/upload.html?username=${user}`;
+	})
+}
 
 
 const serialize = function() {
@@ -24,12 +54,9 @@ const serialize = function() {
 function getUsername() {
 	let url = window.location.href;
 	let username = url.split("username=")[1];
-	console.log(username);
-	callForAnalytics(username);
-	callForData(username);
-
-
+	return username;
 }
+
 // call for data
 function callForAnalytics(user) {
 	console.log('going for overall analytics');
@@ -93,6 +120,26 @@ function makeGraphOverall(data) {
 	    surprise
 	    ]
 	};
+
+// var ctx = document.getElementById('overall-chart').getContext('2d');
+// var chart = new Chart (ctx, {
+// 	type:'line',
+// 	data: {
+// 		labels: [1,2,3,4],
+// 		datasets: [{
+// 			label:"overall impression",
+// 			backgroundColor: 'rgb(255,99,132)',
+// 			borderColor: 'rgb(255,99,132)',
+// 			data: 
+// 				anger
+		  
+
+// 		}]
+// 	},
+// 	options: {}
+// }); 
+
+
 	new Chartist.Line('#progress-graph', data);
 	console.log('new overall graph made');
 }
@@ -138,6 +185,8 @@ function makeGraphRecentVideo(data) {
 	console.log('new overall graph made');
 }
 
-$(getUsername);
+
+
+$(checkAuthentication);
 
 

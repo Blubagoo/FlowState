@@ -8,15 +8,31 @@ let username = window.location.href.split("username=")[1];
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
 
-function listenForUpload() {
-  document.getElementByClass('upload-btn').disabled = true;
-  $('#upload-input').on('click', () => {
-    document.getElementByClass('upload-btn').disabled = false;
-
+function checkAuthentication() {
+  let username = getUsername();
+  //if not authenticated redirect
+  if(localStorage[`user${username}`] == null) {
+    window.location = "https://flow-state.herokuapp.com/login.html";
+  }
+  
+  let localStore = JSON.parse(localStorage[`user${username}`])
+  $.ajax({
+    url: '/api/auth',
+    headers: {
+      "Authorization": `Bearer ${localStore.jwt}`
+    },
+    success: () => {
+      runWebcam();
+    },
+    error: () => {
+      window.location = "https://flow-state.herokuapp.com/login.html";
+    }
   })
+
 }
 
 function runWebcam() {
+
   
   const constraints = {
     audio: false,
@@ -71,33 +87,29 @@ function listenForEvent(recorder) {
 }
 
 function listenForStop(rec,blobParts) {
-  
-  console.log(rec);
   $('#btn-stop-recording').on('click', function() {
-      console.log(rec);
-      console.log('listen for stop');
-      document.getElementById('btn-start-recording').disabled = false;
-      document.getElementById('end-btn').disabled = false;
-      pageListener();
-      rec.stop();    
-     
-      console.log(rec.state);          
-      rec.onstop = function(e) {
-        console.log('rec stopped');
+    document.getElementById('btn-start-recording').disabled = false;
+    document.getElementById('end-btn').disabled = false;
+    
+    rec.stop();    
+   
+    console.log(rec.state);          
+    rec.onstop = function(e) {
+      console.log('rec stopped');
 
-        let blob = new Blob(blobParts, {'type':'video/WEBM\;codecs=h264'});
-        console.log(blob);
-        let myFile = new File([blob], "tstVideo.webm", {
-                                                    type: 'video/WEBM\;codecs=h264',
-                                                    lastModified: Date.now()
-                                                  });
+      let blob = new Blob(blobParts, {'type':'video/WEBM\;codecs=h264'});
+      console.log(blob);
+      let myFile = new File([blob], "tstVideo.webm", {
+                                                  type: 'video/WEBM\;codecs=h264',
+                                                  lastModified: Date.now()
+                                                });
+      
+      uploadToServer(myFile);
         
-        uploadToServer(myFile);
-        console.log(myFile);            
-              
-        
-        const objectUrl = URL.createObjectURL(myFile);
-      }
+      const objectUrl = URL.createObjectURL(myFile);
+      $('#videoElement').hide();
+      $('#animation').show();
+    }
   });
 }
 function downloadVideo(blob) {
@@ -122,12 +134,6 @@ function uploadToServer(myFile) {
         submitFileToApi(VIDEO_URL);
     },
     error: (err) => console.error(err)
-  });
-}
-
-function pageListener() {
-  $('#end-btn').on('click', function() {
-    deleteVideo();
   });
 }
 
@@ -163,7 +169,7 @@ function submitFileToApi(url) {
       setTimeout(()=>{
         getAnalytics(data.id);
         getVideoData(data.id);
-      }, 13000);
+      }, 20000);
 
     },
     error: function(error) {
@@ -294,7 +300,8 @@ function postVideoData(obj) {
     data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');
-      // window.logcation = dashboard.html;
+      
+      setTimeout(window.location = `dashboard.html?username=${username}`, 5 * 1000)
     },
     error: (err) => console.error(err)
   };

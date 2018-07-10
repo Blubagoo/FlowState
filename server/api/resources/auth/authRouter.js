@@ -21,27 +21,26 @@ const localAuth = passport.authenticate('local', {session: false});
 
 router.use(bodyParser.json());
 
-router.post('/login', localAuth, (req, res) => {
-  const authToken = createAuthToken(req.user.serialize());
-  let username = req.body.username;
-  res.json({authToken});
-});
-
 const jwtAuth = passport.authenticate('jwt', {session: false});
+
+router.get('/', jwtAuth, (req, res) => {
+  res.status(200).end();
+})
+
+router.post('/login/:user', localAuth, (req, res) => {
+  const authToken = createAuthToken(req.user.serialize());
+  res.status(200).json({
+    url: `https://flow-state.herokuapp.com/dashboard.html?username=${req.params.user}`,
+    local: `http://localhost:3000/dashboard.html?username=${req.params.user}`,
+    user: `${req.params.user}`,
+    authToken
+    });  
+});
 
 router.post('/refresh', jwtAuth, (req, res) => {
 	console.log('refresh targeted');
 	const authToken = createAuthToken(req.user);
 	res.json({authToken});
 });
-
-router.get('/dashboard/:user/:jwt', jwtAuth, (req, res) => {
-  console.log('redirecting')
-	res.status(200).json({url: `https://flow-state.herokuapp.com/dashboard.html?username=${req.params.user}`});   
-})
-router.get('/private', (req, res) => {
-  console.log('going to dashboard');
-  res.location("http://localhost:8080/dashboard.html");
-})
 
 module.exports = router;

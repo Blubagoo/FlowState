@@ -45,8 +45,10 @@ app.use('/api/users/', userRoutes);
 app.use('/api/users/analytics', dataRoutes);  
 app.use('/api/auth/', authRoutes);
 
+app.get('/dashboard.html', (req, res) => {
 
-;
+})
+
 
 
 let server;

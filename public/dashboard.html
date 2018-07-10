@@ -23,28 +23,32 @@
 			<h1 class="banner" role="banner">Dashboard</h1>
 			<a href="#">Logout</a>
 		</div>
+
 	</header>
 	<main role="main">
 		<div id="nav-area">
-			<ul>
-				<li>Make a prediction</li>
-				<li>Compare your your different moods to when you got the most progress done</li>
-				<li><a href="upload.html?username=blubagoo">Submit a new video!</a></li>
-			</ul>
+			<button id="on-btn">On</button>
+			<button id="off-btn">Off</button>
+			<button id="new-vid">New Video</button>
 		</div>
 		<div class="main-area">
+			<div class="video">
+				<video autoplay="true" id="videoElement"></video>
+			</div>
 			<div id="mood-graph" class="ct-chart cd-octave">
-				<button id="graph-btn">graph it</button>
+				
 			</div>
 			<div id="progress-graph" class="ct-chart cd-octave">
 			</div>
+			<div id="canvas area">
+				<canvas id ="overall-chart"></canvas>
 		</div>
 	</main>
 	<footer role="conent-info">
 		<p id="">Powered by <a href="#">Kairos</a>.</p>
 	</footer>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 <script src="javascript/dashboard.js"></script>  
 </body>
 </html>
