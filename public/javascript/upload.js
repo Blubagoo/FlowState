@@ -163,7 +163,7 @@ function submitFileToApi(url) {
       setTimeout(()=>{
         getAnalytics(data.id);
         getVideoData(data.id);
-      }, 11000);
+      }, 13000);
 
     },
     error: function(error) {
