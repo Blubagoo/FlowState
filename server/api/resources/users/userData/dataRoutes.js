@@ -18,6 +18,7 @@ router.get('/:user', (req, res) => {
     .find({
       user: `${req.params.user}`
     })
+    .sort({ date : -1})
     .then(data =>	res.json(data))
     .catch(err => console.error(err).pretty());
 });
@@ -27,6 +28,7 @@ router.get('/dynamic/:user', (req, res) => {;
     .find({
       user: `${req.params.user}`
     })
+    .sort({ date : -1})
     .then(data =>	res.json(data))
     .catch(err => console.error(err).pretty());
 });

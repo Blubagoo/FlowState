@@ -1,5 +1,7 @@
 'use strict';
 //check local storage for authentication
+Chart.defaults.global.defaultFontColor = "#FAFFD8";
+
 function checkAuthentication() {
 	let username = getUsername();
 	//if not authenticated redirect
@@ -61,11 +63,9 @@ function getUsername() {
 
 // call for data
 function callForAnalytics(user) {
-	console.log('going for overall analytics');
 	const settings = {
 		url: `/api/users/analytics/${user}`,
 		success: (data) => {
-			console.log('got data analytics', data);
 			makeGraphOverall(data);
 		},
 		error: (err) => console.error(err)
@@ -73,11 +73,9 @@ function callForAnalytics(user) {
 	$.ajax(settings);
 }
 function callForData(user) {
-	console.log('going for video data');
 	const settings = {
 		url: `/api/users/analytics/dynamic/${user}`,
 		success: (data) => {
-			console.log('got data video', data);
 			makeGraphRecentVideo(data);
 		},
 		error: (err) => console.error(err)
@@ -85,18 +83,29 @@ function callForData(user) {
 	$.ajax(settings);
 }
 // display data 
+function serializeDate(date) {
+	let splitDate = date.split("T");
+	let moDtYr = splitDate[0].split("-");
+	return `${moDtYr[1]}-${moDtYr[2]}-${moDtYr[0]}`
+}
 
-		
 function makeGraphOverall(data) {
-	let anger = [];
-	let disgust = [];
-	let fear = [];
-	let joy = [];
-	let sadness = [];
-	let surprise = [];
-	let date = [];
-	
+	var ctx = document.getElementById('overall-chart').getContext('2d');
+	var anger = [];
+	var disgust = [];
+	var fear = [];
+	var joy = [];
+	var sadness = [];
+	var surprise = [];
+	var date = [];
+	var glances = [];
+	var dwell = [];
+	var positive = [];
+	var neutral = [];
+	var negative = [];
 	let mapDocs = data.map(doc => {
+		let dte = doc.date;
+		date.push(serializeDate(dte));
 		let angr = doc.anger;
 		anger.push(angr);
 		let dsgst = doc.disgust;
@@ -109,57 +118,82 @@ function makeGraphOverall(data) {
 		sadness.push(sad);
 		let srprise = doc.surprise;
 		surprise.push(srprise);
+		let glnces = doc.glances;
+		glances.push(glnces);
+		let dwll = doc.dwell;
+		dwell.push(dwll);
+		let pstv = doc.positive;
+		positive.push(pstv);
+		let ntrl = doc.neutral;
+		neutral.push(ntrl);
+		let ngtv = doc.negative;
+		negative.push(ngtv);
 	});
-
-	var data = {
-	  labels: date,
-	  series: [
-	    anger,
-	    disgust,
-	    fear,
-	    joy,
-	    sadness,
-	    surprise
-	    ]
-	};
-
-// var ctx = document.getElementById('overall-chart').getContext('2d');
-// var chart = new Chart (ctx, {
-// 	type:'line',
-// 	data: {
-// 		labels: [1,2,3,4],
-// 		datasets: [{
-// 			label:"overall impression",
-// 			backgroundColor: 'rgb(255,99,132)',
-// 			borderColor: 'rgb(255,99,132)',
-// 			data: 
-// 				anger
-		  
-
-// 		}]
-// 	},
-// 	options: {}
-// }); 
-
-
-	new Chartist.Line('#progress-graph', data);
-	console.log('new overall graph made');
+	var chart = new Chart (ctx, {
+		type:'line',
+		data: {
+			labels: date,
+			datasets: [{
+				label:"anger",
+				borderColor: "#CA6624",
+				data: anger
+			},
+			{
+				label:"fear",
+				borderColor: "#5C3085",
+				data: fear
+			},
+			{
+				label:"disgust",
+				borderColor: "#4AC85C",
+				data: disgust
+			},
+			{
+				label:"joy",
+				borderColor: "#F0ED2B",
+				data: joy
+			},
+			{
+				label:"sadness",
+				borderColor: "#5D70FC",
+				data: sadness
+			},
+			{
+				label:"surprise",
+				borderColor: "#F34DFE",
+				data: surprise
+			}
+			]
+		},
+		options: {
+			responsive: false,
+			fontSize: 30,
+			scales: {
+				yAxes: [{
+					scaleLabel:{
+						lineHeight: 100,
+						fontSize: 80,
+						labelString: "frames"
+					}
+				}]
+			}
+		}
+}); 
 }
 
 
 
 function makeGraphRecentVideo(data) {
-	let anger = [];
-	let disgust = [];
-	let fear = [];
-	let joy = [];
-	let sadness = [];
-	let surprise = [];
-	let date = [];
-console.log(data);
-
-	console.log('trying to run');
-	let mapVid = data[data.length - 1].frames.map(frame => {
+	var anger = [];
+	var disgust = [];
+	var fear = [];
+	var joy = [];
+	var sadness = [];
+	var surprise = [];
+	var date = [];
+	var mapVid = data[0].frames.map((frame, index) => {
+		let dt = index + 1
+		date.push(dt);
 		let angr = frame.anger;
 		anger.push(angr);
 		let dsgst = frame.disgust;
@@ -173,23 +207,64 @@ console.log(data);
 		let srprise = frame.surprise;
 		surprise.push(srprise);
 	});
-	var data = {
-  labels: ['date', 'date', 'date', 'date', 'date'],
-  series: [
-    anger,
-    disgust,
-    fear,
-    joy,
-    sadness,
-    surprise
-  ],
-};
-new Chartist.Line('#mood-graph', data);
-console.log('new overall graph made');	
+	var ctx = document.getElementById('recentVideo').getContext('2d');
+	var chart = new Chart (ctx, {
+	type:'line',
+	data: {
+		labels: date,
+		datasets: [{
+			label:"anger",
+			borderColor: "#CA6624",
+			data: anger
+		},
+		{
+			label:"fear",
+			borderColor: "#5C3085",
+			data: fear
+		},
+		{
+			label:"disgust",
+			borderColor: "#4AC85C",
+			data: disgust
+		},
+		{
+			label:"joy",
+			borderColor: "#F0ED2B",
+			data: joy
+		},
+		{
+			label:"sadness",
+			borderColor: "#5D70FC",
+			data: sadness
+		},
+		{
+			label:"surprise",
+			borderColor: "#F34DFE",
+			data: surprise
+		}
+		]
+	},
+	options: {responsive: false}
+}); 
+	
+
+
 }
 
+function listenForEvent() {
+	$('#lastVid-btn').on('click',(e)=> {
+		e.preventDefault();
+		$('.canvas-overall').hide();
+		$('.canvas-recent').show();
+	});
+	$('#overall-btn').on('click', (e)=> {
+		e.preventDefault();
+		$('.canvas-recent').hide();
+		$('.canvas-overall').show();
 
+	})
+}
 
 $(checkAuthentication);
-
+$(listenForEvent)
 

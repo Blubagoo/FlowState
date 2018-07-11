@@ -19,29 +19,26 @@
 <body>
 	<header>
 		<div class="header">
-			<img src="#" id="img=logo" alt="Flow-State Logo">
-			<h1 class="banner" role="banner">Dashboard</h1>
-			<a href="#">Logout</a>
+			<p id="logo">fS</p>
+		</div>
+		<div class="banner">
+			<h1 role="banner">Dashboard</h1>
 		</div>
 
 	</header>
 	<main role="main">
 		<div id="nav-area">
-			<button id="on-btn">On</button>
-			<button id="off-btn">Off</button>
-			<button type="button" id="newBtn">New Video</button>
+			<button id="newBtn">New Video</button>
+			<button id="overall-btn">Overall Feel</button>
+			<button id="lastVid-btn">Recent Video Results</button>
 		</div>
 		<div class="main-area">
-			<div class="video">
-				<video autoplay="true" id="videoElement"></video>
+			<div class="canvas-overall">
+				<canvas id="overall-chart"></canvas>
 			</div>
-			<div id="mood-graph" class="ct-chart cd-octave">
-				
+			<div class="canvas-recent">
+				<canvas id="recentVideo"></canvas>
 			</div>
-			<div id="progress-graph" class="ct-chart cd-octave">
-			</div>
-			<div id="canvas area">
-				<canvas id ="overall-chart"></canvas>
 		</div>
 	</main>
 	<footer role="conent-info">

@@ -1,74 +1,83 @@
-
-ul li {
-	list-style-type: none;
-	display: inline-block;
+body {
+	margin: 0;
+	padding: 0;
+	background: radial-gradient(circle at 50%, #4E7CB7, #123459);
+	color: #FAFFD8;
 }
-ul {
-	text-align: right;
-}
-.header {
-	text-align: center;
-	font-size: 25px;
-	border-radius: 8px;
-	border: 2px solid black;
-}
-
-#pic-sect {
+footer {
 	display: flex;
 	justify-content: center;
+}
+a {
+	color: #FAFFD8;
 }
 main {
-	text-align: center;
-	padding: 0 5px;
+	display: flex;
+	flex-direction: column;
 }
-img {
-	border-radius: 10px;
-	border: 2px solid grey;
-	margin-top: 10px;
+header {
+	border-bottom: 3px solid #FAFFD8;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
-#caption {
-	background-color:#E8E8E8;
-	border-radius:8px;
-	padding: 5px;
-	width: 62%;
-	margin-top: 2px;
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 0;
 }
-.caption-area {
+#head-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+.banner {
+	padding-right: 30px;
+}
+#nav-area button {
+	width: 150px;
+	margin: 4px 10px;
+}
+#nav-area {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	width: 20%;
+}
+.main-area{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+
+
+
+#info-container,
+#terms-sect {
+	padding: 80px 200px;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	font-size: 26px;
+}
+ul li{
+	display: inline-block;
+	font-size: 26px;
+}
+ul {
+	padding-right: 20px;
+}
+#logo{
+	margin: 5px 20px;
+	padding: 0;
+	font-size: 80px;
 }
 .info-sect {
-	font-weight: 800;
-}
-#start-button {
-	display: hidden;
-	margin-bottom: 11px;
-}
-#caption {
-	font-style: italic;
-	font-weight: 150
+	text-align: center;
+	font-size: 18px;
+	width: 50%;
 }
 
-@media only screen and (min-width: 640px) {
-	
-	body {
-		padding: 40px 150px 0 150px;
-	}
-
-	img {
-		width: 30%;
-		height: 30%;
-	}
-
-	#header {
-		font-size: 100%;
-		margin-top: 40px;
-	    margin-bottom: 40px;
-	}
-
-	#caption {
-		width: 29%;
-	}
-
-
-}
