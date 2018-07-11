@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 	<meta name="description" content="Upload a picture and use facial recognition software that helps keep you on track">
 	<meta name="keywords" content="Upload Flowstate facial recognition software Kairos">
-	<link href="style/index.css" rel="stylesheet" type="text/css">
 	<link href="style/login.css" rel="stylesheet" type="text/css">
 	<script
 	  src="https://code.jquery.com/jquery-3.3.1.js"
@@ -17,26 +16,35 @@
 </head>
 
 <body>
-	<header role="banner">
-		<h2 id="banner">Please login below!</h2>
+	<header>
+		<div class="header">
+			<p id="logo">fS</p>
+		</div>
+		<div class="banner">
+			<h1 role="banner">Login</h1>
+		</div>
+
 	</header>
 	<main role="main">
 		<div class="form-area">
+			<h2 class="h2">Please sign in below</h2>
 			<form id="login-area">
 				<fieldset>
 					<legend>
-						<label for="user">Username:</label>
-						<input name="user" type="text" id="user-input">
-						<label for="pass">Password:</label>
-						<input name="pass" type="text" id="pass-input">
-						<button type="submit" id="submit-btn">Submit</button>
+						<div id="leg-child">
+							<label for="user">Username:</label>
+							<input name="user" type="text" id="user-input">
+							<label for="pass">Password:</label>
+							<input name="pass" type="password" id="pass-input">
+							<button type="submit" id="submit-btn">Submit</button>
+						</div>
 					</legend>
 				</fieldset>
 			</form>
 		</div>
 	</main>
 	<footer role="content-info">
-
+		<p>Powered by <a href="https://www.kairos.com">Kairos</a></p>
 	</footer>
 <script src="javascript/login.js"></script>
 </body>

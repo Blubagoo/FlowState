@@ -1,12 +1,63 @@
 body {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
+	background: radial-gradient(circle at 50%, #4E7CB7, #123459);
+	color: #FAFFD8;
 }
-#container {
-  display: flex;
-  justify-content: center;
+footer {
+	display: flex;
+	justify-content: center;
+}
+a {
+	color: #FAFFD8;
+}
+
+header {
+	border-bottom: 3px solid #FAFFD8;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0;
+}
+.banner {
+	padding-right: 30px;
+}
+#nav-area button {
+	width: 150px;
+	margin: 4px 10px;
+}
+#nav-area {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	width: 20%;
+}
+
+
+.videoNSample {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 
 }
-#file-upload {
+.caption-area {
+	width: 400px;
+}
+footer {
+	margin-top: 125px;
+}
+.ctrls {
 	display: flex;
+	flex-direction: column;
+}
+.main-area {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }

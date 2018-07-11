@@ -1,10 +1,97 @@
-#banner {
-	text-align: center;
-}
 fieldset {
 	border: none;
 }
-#form-area {
+
+body {
+	margin: 0;
+	padding: 0;
+	background: radial-gradient(circle at 50%, #4E7CB7, #123459);
+	color: #FAFFD8;
+}
+footer {
+	display: flex;
+	justify-content: center;
+}
+a {
+	color: #FAFFD8;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 3px solid #FAFFD8;
+	align-items: baseline;
+
+}
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0;
+}
+.banner {
+	padding-right: 30px;
+}
+#nav-area button {
+	width: 150px;
+	margin: 4px 10px;
+}
+#nav-area {
 	display: flex;
 	flex-direction: column;
+	margin-top: 20px;
+	width: 20%;
+}
+.form-area {
+	display: flex;
+	align-content: center;
+	flex-direction: column;
+}
+
+.form-area form{
+	margin-top: 150px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+#logo {
+	margin: 5px 20px;
+	padding: 0;
+	font-size: 80px;
+}
+main {
+	display: flex;
+	justify-content: center;
+}
+.h2 {
+	margin-top: 130px;
+	display: flex;
+	justify-content: center;
+	font-size: 45px;
+}
+.leg-child input,label,button {
+	font-size: 25px;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+}
+input {
+	height: 30px;
+	width: 400px;
+	font-size: 20px;
+}
+label{
+	font-size: ;
+}
+#submit-btn {
+	display: flex;
+	align-items: center;
+	margin-top: 25px;
+	margin-left: 150px;
+	background: radial-gradient(circle at 50%, #EEF0F2, #FAFFD8);
+}
+footer {
+	margin-top: 150px;
 }

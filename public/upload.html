@@ -1,68 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>	</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="description" content="Upload a picture and use facial recognition software that helps keep you on track">
 	<meta name="keywords" content="Upload Flowstate facial recognition software Kairos">
-	<link href="style/	index.css" rel="stylesheet" type="text/css">
 	<link href="style/upload.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="chartist.min.css">
+	<script src="chartist.min.js"></script>
+
 	<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+	<title>DashBoard</title>
 </head>
 <body>
-<div class="header">
-	<header role="banner" class="banner">
-		<h1 id="banner">Please take a 20 second video of yourself and how your day is going.</h1>
-
+	
+	<header>
+		<div class="header">
+			<p id="logo">fS</p>
+		</div>
+		<div class="banner">
+			<h1 role="banner">Video Upload</h1>
+		</div>
 	</header>
-</div>
-<div class="main">
+
 	<main role="main">
-		<div class="ctrls">
-			<div id="button-area">
+		<div id="nav-area">
+			<button id="newBtn">New Video</button>
+			<button id="overall-btn">Overall Feel</button>
+			<button id="lastVid-btn">Recent Video Results</button>
+			<div class="ctrls">
 				<button id="btn-start-recording">Start Recording</button>
 				<button id="btn-stop-recording" disabled>Stop Recording</button>
 			</div>
-			<div id="file-upload">
-				<div class="progress">
-			    	<div class="progress-bar" role="progressbar"></div>
-			    	<button class="btn btn-lg upload-btn" type="button">Upload File</button>
-			    </div>	
-				<input id="upload-input" type="file" name="uploads[]">
-			</div>
 		</div>
-		<div class="animation">
-			<p id="ani-text">Please bear with us while we process the video. Do not navigate away from the page! Otherwise your video data will not be uploaded.</p>
-		<div class="video">
-			<section role="region">
-			<div id="example-sect">
-				<h3 class="header" align="center">Let's look at a good example</h3>
-				<p class="info-sect">Here we have a picture that is the prime example of what we need to accurately analyze. Some things such as bad lighting, or angling the face, can throw this off. Best practices would indicate taking the picture in the same place every time with good lighting to get the best results.</p>
-				<div id="pic-sect">
-					<img name="img" id="ex-pic" src="https://s3.amazonaws.com/kairos-media/blog-images/kairos-how-it-works-liz-photo.jpg" alt="example photo" align="center"><br>
+		<div class="main-area">
+			<div class="videoNSample">
+				<div class="video">
+					<video autoplay="true" id="videoElement"></video>
 				</div>
-				<caption for="img">
+				<div class="sample">
+					<iframe width="640" height="480" src="https://www.youtube.com/embed/vAAEpeLKyuQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 					<div class="caption-area">
 						<p class="info-sect" id="caption" align="center">As you can see the image above has her facial features right at the center of the picture. The lighting is great and her head is completely upright. </p>
-					</div>
-				</caption>
+					</div>	
+				</div>
 			</div>
-			<video autoplay="true" id="videoElement"></video>
+			
 		</div>
 	</main>
-</div>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.4.6/RecordRTC.js"></script>
-<script src="https://cdn.webrtc-experiment.com/gumadapter.js"></script>
-<script type="module" src="libraries/FileSaver.js"></script>
-<script type="module" src="javascript/upload.js"></script>
+	<footer role="conent-info">
+		<p id="">Powered by <a href="#">Kairos</a>.</p>
+	</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="javascript/upload.js"></script>  
 </body>
 </html>
+
+
