@@ -57,7 +57,7 @@ header {
 	flex-direction: column;
 }
 #logo {
-	margin: 5px 20px;
+	margin: 0px 20px;
 	padding: 0;
 	font-size: 80px;
 }
