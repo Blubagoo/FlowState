@@ -90,7 +90,7 @@ function listenForEvent(recorder) {
 function listenForStop(rec,blobParts) {
   $('#btn-stop-recording').on('click', function() {
     document.getElementById('btn-start-recording').disabled = false;
-    document.getElementById('end-btn').disabled = false;
+    document.getElementById('btn-stop-recording').disabled = true;
     
     rec.stop();    
    
