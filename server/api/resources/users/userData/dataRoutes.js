@@ -18,7 +18,7 @@ router.get('/:user', (req, res) => {
     .find({
       user: `${req.params.user}`
     })
-    .sort({ date : -1})
+    .sort({ date : 1})
     .then(data =>	res.json(data))
     .catch(err => console.error(err).pretty());
 });
