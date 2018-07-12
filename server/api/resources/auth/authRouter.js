@@ -2,12 +2,9 @@
 
 const express = require('express');
 const passport = require('passport');
-const bodyParser = require('body-parser');
 const {authenticate, authenticateForLogin, refreshToken} = require('./authctrl');
 
 const router = express.Router();
-
-router.use(bodyParser.json());
 
 const localAuth = passport.authenticate('local', {session: false});
 
