@@ -8,19 +8,14 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
+
+
 describe('index page', function() {
+	
 	before(function() {
 		runServer();
 	});
-	// beforeEach(function() {
-		
-	// 	return seedBlog();	    
-	// });
 
-	// afterEach(function() {
-
-	// 	return tearDownDb();
-	// });
 	after(function() {
 		closeServer();
 	})
@@ -36,12 +31,4 @@ describe('index page', function() {
 			.catch(err=> console.error(err));
 	});
 });
-describe('Get route with users', function() {
-	before(function() {
-		runServer();
-	});
-	after(function() {
-		closeServer();
-	})
-})
 

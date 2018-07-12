@@ -23,12 +23,12 @@ router.get('/dynamic/:user', (req, res) => {;
 });
 
 router.post('/:user', jsonParser, (req, res) => {
-  postNewData(req.body);
+  postNewData(req, res);
 });
 
 
 router.post('/videoData/:user', jsonParser, (req, res) => {
-	postNewDynamic(req.body)
+	postNewDynamic(req, res)
 });
 
 module.exports = router;

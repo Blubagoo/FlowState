@@ -278,7 +278,7 @@ function postAnalytics(obj) {
       "Content-Type": "application/json"
     },
     method: 'POST',
-    contentType: "apllication/json",
+    contentType: "application/json",
     data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');
@@ -296,7 +296,7 @@ function postVideoData(obj) {
       "Content-Type": "application/json"
     },
     method: 'POST',
-    contentType: "apllication/json",
+    contentType: "application/json",
     data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');

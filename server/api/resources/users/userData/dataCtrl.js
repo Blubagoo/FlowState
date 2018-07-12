@@ -21,8 +21,8 @@ function getUserDynamic(username) {
     .catch(err => console.error(err).pretty());
 }
 
-function postNewData(data) {
-	let newData = new Data(data);
+function postNewData(req, res) {
+	let newData = new Data(req.body);
   newData.save(err => {
   	if(err){
   		console.error(err);
@@ -30,8 +30,8 @@ function postNewData(data) {
   });
   return res.status(201).json(newData).end();
 }
-function postNewDynamic(data) {
-  let newData = new Dynamic(data);
+function postNewDynamic(req, res) {
+  let newData = new Dynamic(req.body);
   newData.save(err => {
   	if(err){
   		console.error(err);

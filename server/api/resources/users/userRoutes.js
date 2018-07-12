@@ -11,7 +11,7 @@ const jsonParser = bodyParser.json();
 
 
 router.post('/', jsonParser, (req, res) => {
-  postNewUser(`${req.body}`);
+  postNewUser(req,res);
 });
 
 router.get('/:user', (req, res) => {

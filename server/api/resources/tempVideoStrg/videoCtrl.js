@@ -9,7 +9,7 @@ function getVideo(user) {
   return res.sendFile(file);
 }
 
-function postVideo(user, req) {
+function postVideo(user, req, res) {
   var form = new formidable.IncomingForm();
   form.multiples = true;
   form.uploadDir = path.join(__dirname, '/');
@@ -21,7 +21,7 @@ function postVideo(user, req) {
     console.log('An error has occured: \n' + err);
   });
   form.on('end', function() {
-    res.end('success');
+    return res.end('success');
   });
   form.parse(req);
 }

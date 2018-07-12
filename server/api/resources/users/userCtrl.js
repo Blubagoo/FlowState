@@ -8,7 +8,7 @@ function getUser(username) {
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 }
 
-function postNewUser(data) {
+function postNewUser(req, res) {
 	const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in data));
   
