@@ -26,25 +26,30 @@
 		</div>
 	</header>
 
+	<div id="info">
+		<h2>Take about a 20 second video about how your current project is going.</h2>
+	</div>
+
 	<main role="main">
-		<div id="nav-area">
-			<button id="btn-start-recording">Start Recording</button>
-			<button id="btn-stop-recording" disabled>Stop Recording</button>
-		</div>
-		<div class="main-area">
-			<div class="videoNSample">
-				<div class="video">
-					<video autoplay="true" id="videoElement"></video>
-				</div>
-				<div class="sample">
-					<iframe width="640" height="480" src="https://www.youtube.com/embed/vAAEpeLKyuQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			<div id="nav-area">
+				<button id="btn-start-recording">Start Recording</button>
+				<button id="btn-stop-recording" disabled>Stop Recording</button>
+				<button id="dashboard-btn">Back to Dashboard</button>
+			</div>
+			<div class="main-area">
+				<div class="videoNSample">
+					<div class="video">
+						<video autoplay="true" id="videoElement"></video>
+					</div>
+					<div class="sample">
+						<iframe width="640" height="480" src="https://www.youtube.com/embed/vAAEpeLKyuQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+					</div>
 				</div>
 			</div>
-			
 		</div>
 	</main>
-	<footer role="conent-info">
-		<p id="">Powered by <a href="#">Kairos</a>.</p>
+	<footer role="content-info">
+		<p>Powered by <a href="#">Kairos</a>.</p>
 	</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>

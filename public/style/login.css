@@ -95,3 +95,7 @@ label{
 footer {
 	margin-top: 150px;
 }
+#info h2{
+	display: flex;
+	justify-content: center;
+}
