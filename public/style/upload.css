@@ -38,26 +38,21 @@ header {
 	margin-top: 20px;
 	width: 20%;
 }
-
-
 .videoNSample {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 
 }
-.caption-area {
-	width: 400px;
-}
 footer {
 	margin-top: 125px;
-}
-.ctrls {
-	display: flex;
-	flex-direction: column;
 }
 .main-area {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+}
+#logo {
+	font-size: 80px;
+	margin: 0 20px;
 }
