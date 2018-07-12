@@ -80,9 +80,13 @@ function listenForEvent(recorder) {
 
         listenForStop(recorder, chunks);
 
-    document.getElementById('btn-stop-recording').disabled = false;
-    
+    document.getElementById('btn-stop-recording').disabled = false; 
   });
+  $('#dashboard-btn').on('click', (e)=> {
+    e.preventDefault();
+    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`
+
+  })
 }
 
 function listenForStop(rec,blobParts) {
