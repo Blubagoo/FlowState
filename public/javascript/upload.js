@@ -84,7 +84,7 @@ function listenForEvent(recorder) {
   });
   $('#dashboard-btn').on('click', (e)=> {
     e.preventDefault();
-    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`
+    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`  
 
   })
 }

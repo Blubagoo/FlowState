@@ -3,19 +3,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const appMiddleware = require('./middleware/middleware');
+
+
 const videoRoutes = require('./api/resources/tempVideoStrg/videoRoutes');
 const authRoutes = require('./api/resources/auth/authRouter');
 const dataRoutes = require('./api/resources/users/userData/dataRoutes');
-const {localStrategy, jwtStrategy} = require('./api/resources/auth/strategies');
 const userRoutes = require('./api/resources/users/userRoutes');
-const path = require('path');
-const formidable = require('formidable');
-const fs = require('fs');
-const passport = require('passport');
-const PORT = process.env.PORT || 3000;
 
 
-
+const strategies = require('./api/resources/auth/strategies');
+const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('../env/config');
 
 mongoose.Promise = global.Promise;
 
@@ -25,8 +22,7 @@ appMiddleware(app);
 
 app.use(express.static('public'));
 
-passport.use(localStrategy);
-passport.use(jwtStrategy);
+strategies(app);
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -45,12 +41,6 @@ app.use('/api/users/', userRoutes);
 app.use('/api/users/analytics', dataRoutes);  
 app.use('/api/auth/', authRoutes);
 
-app.get('/register.html', (req, res) => {
-res.sendFile('../public/register.html');
-})
-
-
-
 let server;
 
 function runServer(databaseUrl, port = PORT) {
@@ -61,7 +51,7 @@ function runServer(databaseUrl, port = PORT) {
         return reject(err);
       }
       server = app.listen(PORT, () => {
-        console.log(`Your app is listening on port inside Promise ${PORT}`);
+        console.log(`Your app is listening on port ${PORT}`);
         resolve();
       })
         .on('error', err => {

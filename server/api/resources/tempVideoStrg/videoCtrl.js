@@ -1,21 +1,21 @@
 'use strict';
 
-const router = require('express').Router();
-const {}
+const path = require('path');
+const formidable = require('formidable');
+const fs = require('fs');
 
-app.get('/api/resources/tempVideoStrg/:uid', function(req, res){
-  var file = __dirname + `/api/resources/tempVideoStrg/${req.params.uid}`;
-  console.log(file);
-  res.sendFile(file); // Set disposition and send it.
-});
+function getVideo(user) {
+  var file = __dirname + `/${user}`;
+  return res.sendFile(file);
+}
 
-
-app.post('/upload', function(req, res){
-	var form = new formidable.IncomingForm();
+function postVideo(user, req) {
+  var form = new formidable.IncomingForm();
   form.multiples = true;
-  form.uploadDir = path.join(__dirname, '/api/resources/tempVideoStrg');
+  form.uploadDir = path.join(__dirname, '/');
   form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, `${}-video.webm`));
+    fs.rename(file.path, path.join(form.uploadDir, user + ".webm"));
+
   });
   form.on('error', function(err) {
     console.log('An error has occured: \n' + err);
@@ -24,13 +24,14 @@ app.post('/upload', function(req, res){
     res.end('success');
   });
   form.parse(req);
-});
+}
 
+function deleteVideo(user) {
+  const filePath = path.join(__dirname, `/${user}.webm`);
+  fs.unlink(filePath, (err) => {
+    if (err) throw err
+    console.log('file was deleted');
+  });
+}
 
-app.delete('/delete',function(req,res) {
- 	const filePath = path.join(__dirname, '/api/resources/tempVideoStrg/name.webm');
-	fs.unlink(filePath, (err) => {
-  	if (err) throw err
-  	console.log('file was deleted');
-	});
-})
+module.exports = {getVideo, postVideo, deleteVideo};

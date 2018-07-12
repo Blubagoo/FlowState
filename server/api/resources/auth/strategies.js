@@ -1,9 +1,11 @@
 'use strict';
+
+const passport = require('passport');
+
 const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-
 const {User} = require('../users/userModel');
-const {JWT_SECRET} = require('dotenv').config();
+const {JWT_SECRET} = require('../../../../env/config');
 
 const localStrategy = new LocalStrategy((username, password, callback) => {
   let user;
@@ -48,7 +50,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
 
 const jwtStrategy = new JwtStrategy(
   {
-    secretOrKey: `shade`,
+    secretOrKey: `${JWT_SECRET}`,
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     algorithms: ['HS256']
   },
@@ -57,5 +59,8 @@ const jwtStrategy = new JwtStrategy(
     done(null, payload.user);
   }
 );
-console.log('JWT', JWT_SECRET);
-module.exports = { localStrategy, jwtStrategy };
+
+module.exports = function(app) {
+  passport.use(localStrategy);
+  passport.use(jwtStrategy);
+}

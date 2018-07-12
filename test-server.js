@@ -12,6 +12,15 @@ describe('index page', function() {
 	before(function() {
 		runServer();
 	});
+	// beforeEach(function() {
+		
+	// 	return seedBlog();	    
+	// });
+
+	// afterEach(function() {
+
+	// 	return tearDownDb();
+	// });
 	after(function() {
 		closeServer();
 	})
@@ -22,6 +31,17 @@ describe('index page', function() {
 			.get('/')
 			.then(function(res) {
 				expect(res).to.have.status(200);
-			});
+				expect(res).to.be.json;
+			})
+			.catch(err=> console.error(err));
 	});
 });
+describe('Get route with users', function() {
+	before(function() {
+		runServer();
+	});
+	after(function() {
+		closeServer();
+	})
+})
+
