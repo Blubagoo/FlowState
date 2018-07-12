@@ -23,7 +23,7 @@ function checkAuthentication() {
     success: (data) => {
       runWebcam();
       apiKey = data.apikey;
-      apiId = data.apiid
+      apiId = data.apiid;
     },
     error: () => {
       window.location = "https://flow-state.herokuapp.com/login.html";
