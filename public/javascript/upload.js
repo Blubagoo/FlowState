@@ -3,8 +3,6 @@
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
 
-$('#animation').hide();
-
 let username = window.location.href.split("username=")[1];
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
@@ -108,8 +106,6 @@ function listenForStop(rec,blobParts) {
       uploadToServer(myFile);
         
       const objectUrl = URL.createObjectURL(myFile);
-      $('#videoElement').hide();
-      $('#animation').show();
     }
   });
 }
