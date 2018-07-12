@@ -69,5 +69,5 @@ button {
 	width: 405px;
 	display: flex;
 	align-items: center;
-
+	background: radial-gradient(circle at 50%, #EEF0F2, #FAFFD8);
 }
