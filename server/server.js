@@ -4,12 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const appMiddleware = require('./middleware/middleware');
 
-
-const videoRoutes = require('./api/resources/tempVideoStrg/videoRoutes');
-const authRoutes = require('./api/resources/auth/authRouter');
-const dataRoutes = require('./api/resources/users/userData/dataRoutes');
-const userRoutes = require('./api/resources/users/userRoutes');
-
+const routes = require('./api/api');
 
 const strategies = require('./api/resources/auth/strategies');
 const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('../env/config');
@@ -23,6 +18,7 @@ appMiddleware(app);
 app.use(express.static('public'));
 
 strategies(app);
+routes(app);
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -34,12 +30,6 @@ app.use(function (req, res, next) {
   next();
 })
 
-
-
-app.use('/api/video', videoRoutes);
-app.use('/api/users/', userRoutes);
-app.use('/api/users/analytics', dataRoutes);  
-app.use('/api/auth/', authRoutes);
 
 let server;
 

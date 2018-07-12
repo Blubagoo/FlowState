@@ -3,7 +3,7 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-
+const {authenticate, authenticateForLogin, refreshToken} = require('./authctrl');
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.get('/', jwtAuth, (req, res) => {
 })
 
 router.post('/login/:user', localAuth, (req, res) => {
-  authenticateForLogin(req, `${req.params.user}`);  
+  authenticateForLogin(req, `${req.params.user}`, res);  
 });
 
 router.post('/refresh', jwtAuth, (req, res) => {

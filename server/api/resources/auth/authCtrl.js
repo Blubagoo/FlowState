@@ -21,7 +21,7 @@ function authenticate(appKey, appId) {
   });
 }
 
-function authenticateForLogin(req, user) {
+function authenticateForLogin(req, user, res) {
 	const authToken = createAuthToken(req.user.serialize());
   return res.status(200).json({
     url: `https://flow-state.herokuapp.com/dashboard.html?username=${user}`,
@@ -35,3 +35,7 @@ function refreshToken(req) {
 	const authToken = createAuthToken(req.user);
 	return res.json({authToken});
 };
+
+module.exports = {
+  authenticate, authenticateForLogin, refreshToken
+}
