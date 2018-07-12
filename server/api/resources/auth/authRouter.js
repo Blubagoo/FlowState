@@ -3,6 +3,7 @@
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const {APP_ID, APP_KEY} = require('../../../../env/config');
 
 const router = express.Router();
 

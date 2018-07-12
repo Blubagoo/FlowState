@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 const APP_ID = "d93ca6ab";
 const APP_KEY = "25ec525dac1aa1a66f16bd8edf551ea0";
@@ -20,8 +20,10 @@ function checkAuthentication() {
     headers: {
       "Authorization": `Bearer ${localStore.jwt}`
     },
-    success: () => {
+    success: (data) => {
       runWebcam();
+      apiKey = data.apikey;
+      apiId = data.apiid
     },
     error: () => {
       window.location = "https://flow-state.herokuapp.com/login.html";
