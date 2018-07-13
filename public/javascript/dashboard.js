@@ -22,7 +22,7 @@ function checkAuthentication() {
 			listenForNewVideo(username);
 		},
 		error: () => {
-			window.location = "localhost:3000/login.html";
+			window.location.oigin + "/login.html";
 		}
 	})
 
