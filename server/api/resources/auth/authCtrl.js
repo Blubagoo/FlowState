@@ -3,7 +3,7 @@
 const passport = require('passport');
 
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET, JWT_EXPIRY} = require('../../../../env/config.js');
+const {JWT_SECRET, JWT_EXPIRY, appKey, appId} = require('../../../../env/config.js');
 
 const createAuthToken = function(user) {
 
@@ -16,10 +16,13 @@ const createAuthToken = function(user) {
 
 function authenticate(appKey, appId, req, res) {
   console.log(res)
-	return res.status(200).json({
+  return res.status(200).json({
     apikey: appKey,
     apiid: appId
-  });
+    })
+    .then(function(res) {
+      console.log(res.status);
+    })
 }
 
 function authenticateForLogin(req, user, res) {

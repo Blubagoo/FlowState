@@ -22,7 +22,7 @@ function checkAuthentication() {
 			listenForNewVideo(username);
 		},
 		error: () => {
-			window.location = "https://flow-state.herokuapp.com/login.html";
+			window.location = "localhost:3000/login.html";
 		}
 	})
 

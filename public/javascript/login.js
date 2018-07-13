@@ -35,7 +35,7 @@ function authenticateUser(user, pass) {
 		dataType: "json",
 		method:"POST",
 		success: (data) => {
-			setLocalStorageVariables(user, data.authToken, data.url);
+			setLocalStorageVariables(user, data.authToken, data.local);
 		},
 		error: (err) => console.log(err)
 	}
