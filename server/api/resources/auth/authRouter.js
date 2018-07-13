@@ -2,7 +2,7 @@
 
 const express = require('express');
 const passport = require('passport');
-const {authenticate, authenticateForLogin, refreshToken} = require('./authctrl');
+const {authenticate, authenticateForLogin, refreshToken} = require('./authCtrl');
 
 const router = express.Router();
 
