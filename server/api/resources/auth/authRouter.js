@@ -12,7 +12,6 @@ const localAuth = passport.authenticate('local', {session: false});
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.get('/', jwtAuth, (req, res) => {
-  console.log(res)
   return res.status(200).json({
     apikey: appKey,
     apiid: appId

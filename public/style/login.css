@@ -36,7 +36,7 @@ header {
 }
 #nav-area button {
 	width: 150px;
-	margin: 4px 10px;
+	margin: 0 10px;
 }
 #nav-area {
 	display: flex;
@@ -51,13 +51,13 @@ header {
 }
 
 .form-area form{
-	margin-top: 150px;
+	margin-top: 100px;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 }
 #logo {
-	margin: 0px 20px;
+	margin: 0px 40px;
 	padding: 0;
 	font-size: 80px;
 }

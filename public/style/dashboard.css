@@ -20,56 +20,57 @@ header {
 	justify-content: space-between;
 	align-items: center;
 }
+#logo {
+	font-size: 80px;
+	margin: 5px 40px;
+}
 .header {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 0;
-}
-.banner {
-	padding-right: 30px;
 }
 #nav-area button {
 	width: 150px;
 	margin: 4px 10px;
 }
 #nav-area {
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 	margin-top: 20px;
-	width: 20%;
+	width: 200px;
+}
+.banner {
+	padding-right: 30px;
 }
 .main-area{
+	flex: 4;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-start;
-}
-
-
-
-canvas {
-	color: white;
+	align-items: center;
 }
 #overall-chart,
 #recentVideo {
-	display: flex;
-	justify-content: flex-start;
 	height: 750px;
 	width: 1100px;
 	padding-top: 40px;
-	
+	padding-right: 0;	
 }
-.canvas-recent {
-	display: none;
-}
-#logo {
-	font-size: 80px;
-	margin: 5px 20px;
-}
-
 #nav-area button {
 	width: 150px;
 	margin: 4px 10px;
-
+}
+button {
+	background: radial-gradient(circle at 50%, #EEF0F2, #FAFFD8);
+}
+.canvas-recent,
+.canvas-overall {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+.canvas-recent {
+	display: none;
 }

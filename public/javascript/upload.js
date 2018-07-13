@@ -4,6 +4,9 @@ let username = window.location.href.split("username=")[1];
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
 
+let apiKey;
+let apiId;
+
 function checkAuthentication() {
   let username = getUsername();
   //if not authenticated redirect
@@ -160,8 +163,8 @@ function submitFileToApi(url) {
   const settings = {
     url: `https://api.kairos.com/v2/media?source=${url}`,
     headers: {
-      "app_id": `${APP_ID}`,
-      "app_key": `${APP_KEY}`,
+      "app_id": `${apiId}`,
+      "app_key": `${apiKey}`,
     },
     method: "POST",
     success: function(data) {
