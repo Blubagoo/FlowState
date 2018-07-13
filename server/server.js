@@ -20,7 +20,7 @@ routes(app);
 let server;
 
 function runServer(databaseUrl, port = PORT) {
-
+  console.log('starting server');
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {

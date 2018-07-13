@@ -15,6 +15,7 @@ router.get('/', jwtAuth, (req, res) => {
 })
 
 router.post('/login/:user', localAuth, (req, res) => {
+	console.log('trying to authenticate')
   authenticateForLogin(req, `${req.params.user}`, res);  
 });
 

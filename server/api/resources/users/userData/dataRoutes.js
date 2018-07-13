@@ -1,4 +1,4 @@
-'use stric';
+'use strict';
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -15,11 +15,11 @@ const router = express.Router();
 
 
 router.get('/:user', (req, res) => {
-  getUserData(`${req.params.user}`);
+  getUserData(`${req.params.user}`,req,res);
 });
 
 router.get('/dynamic/:user', (req, res) => {;
-  getUserDynamic(`${req.params.user}`)
+  getUserDynamic(`${req.params.user}`,req,res)
 });
 
 router.post('/:user', jsonParser, (req, res) => {

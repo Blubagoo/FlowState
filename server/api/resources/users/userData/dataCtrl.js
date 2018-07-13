@@ -2,7 +2,7 @@
 const {Dynamic} = require('./dynamicDataModel');
 const {Data} = require('./dataModel');
 
-function getUserData(username) {
+function getUserData(username,req,res) {
 	  return Data
     .find({
       user: `${username}`
@@ -11,7 +11,7 @@ function getUserData(username) {
     .then(data =>	res.json(data))
     .catch(err => console.error(err).pretty());
 }
-function getUserDynamic(username) {
+function getUserDynamic(username,req,res) {
 	 return Dynamic
     .find({
       user: `${username}`
