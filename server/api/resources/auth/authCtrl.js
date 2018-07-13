@@ -14,7 +14,8 @@ const createAuthToken = function(user) {
   });
 };
 
-function authenticate(appKey, appId,req,res) {
+function authenticate(appKey, appId, req, res) {
+  console.log(res)
 	return res.status(200).json({
     apikey: appKey,
     apiid: appId
