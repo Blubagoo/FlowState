@@ -3,6 +3,7 @@
 Chart.defaults.global.defaultFontColor = "#FAFFD8";
 
 function checkAuthentication() {
+	console.log('checking authentication')
 	let username = getUsername();
 	//if not authenticated redirect
 	if(localStorage[`user${username}`] == null) {
