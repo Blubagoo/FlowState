@@ -7,7 +7,7 @@ const {getVideo,postVideo,deleteVideo} = require('./videoCtrl');
 const router = express.Router();
 
 router.get('/:id', function(req, res){
-  getVideo(`${req.params.id}`);
+  getVideo(`${req.params.id}`,req,res);
 });
 
 router.post('/:user', function(req, res){
