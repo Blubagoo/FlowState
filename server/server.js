@@ -3,9 +3,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const appMiddleware = require('./middleware/middleware');
-
 const routes = require('./api/api');
-
 const strategies = require('./api/resources/auth/strategies');
 const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('../env/config');
 

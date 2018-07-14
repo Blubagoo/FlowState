@@ -4,11 +4,11 @@ let username = window.location.href.split("username=")[1];
 
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
 
-let apiKey;
-let apiId;
+let appKey;
+let appId;
 
 function checkAuthentication() {
-  let username = getUsername();
+  let username = window.location.href.split("username=")[1];
   //if not authenticated redirect
   if(localStorage[`user${username}`] == null) {
     window.location = "https://flow-state.herokuapp.com/login.html";
@@ -21,12 +21,14 @@ function checkAuthentication() {
       "Authorization": `Bearer ${localStore.jwt}`
     },
     success: (data) => {
+      console.log('success on being authenticated', data);
       runWebcam();
-      apiKey = data.apikey;
-      apiId = data.apiid;
+      appKey = data.APPkey;
+      appId = data.APPid;
     },
-    error: () => {
-      window.location = "https://flow-state.herokuapp.com/login.html";
+    error: (err) => {
+      console.error(err)
+      window.location = window.location.origin + "/login.html";
     }
   })
 
@@ -66,8 +68,7 @@ function runWebcam() {
 
 function listenForEvent(recorder) {
   $('#btn-start-recording').on('click', function() {
-    this.disabled = true;        
-        
+    this.disabled = true;              
 
         recorder.start();
         
@@ -159,12 +160,13 @@ function deleteVideo(user) {
 function submitFileToApi(url) {
   
   console.log(url);
+  console.log
   
   const settings = {
     url: `https://api.kairos.com/v2/media?source=${url}`,
     headers: {
-      "app_id": `${apiId}`,
-      "app_key": `${apiKey}`,
+      "app_id": `${appId}`,
+      "app_key": `${appKey}`,
     },
     method: "POST",
     success: function(data) {
@@ -312,6 +314,6 @@ function postVideoData(obj) {
 
 
 
+$(checkAuthentication)
 
-$(runWebcam);
 

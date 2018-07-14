@@ -1,8 +1,7 @@
 'use strict';
-const express = require('express');
-const passport = require('passport');
 
-const router = express.Router();  
+const passport = require('passport');
+ 
 
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET, JWT_EXPIRY} = require('../../../../env/config.js');
@@ -28,7 +27,7 @@ function authenticateForLogin(req, user, res) {
     });
 }
 
-function refreshToken(req,re) {
+function refreshToken(req,res) {
 	const authToken = createAuthToken(req.user);
 	return res.json({authToken});
 };
