@@ -4,7 +4,7 @@ const path = require('path');
 const formidable = require('formidable');
 const fs = require('fs');
 
-function getVideo(user) {
+function getVideo(user,req,res) {
   var file = __dirname + `/${user}`;
   return res.sendFile(file);
 }
