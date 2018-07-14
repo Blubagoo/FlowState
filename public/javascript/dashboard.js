@@ -2,6 +2,10 @@
 //check local storage for authentication
 Chart.defaults.global.defaultFontColor = "#FAFFD8";
 
+var canvas = document.getElementById('overall-chart');
+var aspectRatio = 1.5;    // height:width = 3:2
+canvas.height = canvas.width * aspectRatio;
+
 function checkAuthentication() {
 	console.log('checking authentication')
 	let username = getUsername();
@@ -167,7 +171,7 @@ function makeGraphOverall(data) {
 			]
 		},
 		options: {
-			responsive: false,
+			Responsive: false,
 			fontSize: 30,
 			scales: {
 				yAxes: [{
@@ -245,7 +249,7 @@ function makeGraphRecentVideo(data) {
 		}
 		]
 	},
-	options: {responsive: false}
+	options: {Responsive: false}
 }); 
 	
 
