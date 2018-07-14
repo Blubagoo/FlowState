@@ -245,8 +245,8 @@ function getAnalytics(id) {
   const settings = {
     url: `https://api.kairos.com/v2/analytics/${id}`,
     headers: {
-      "app_id": `${APP_ID}`,
-      "app_key": `${APP_KEY}`,
+      "app_id": `${appId}`,
+      "app_key": `${appKey}`,
     },
     method: "GET",
     success: function(data) {
@@ -262,8 +262,8 @@ function getVideoData(id) {
   const settings = {
     url: `https://api.kairos.com/v2/media/${id}`,
     headers: {
-      "app_id": `${APP_ID}`,
-      "app_key": `${APP_KEY}`,
+      "app_id": `${appId}`,
+      "app_key": `${appKey}`,
     },
     method: "GET",
     success: function(data) {

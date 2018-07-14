@@ -12,13 +12,10 @@ const localAuth = passport.authenticate('local', {session: false});
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.get('/', jwtAuth, (req, res) => {
-	res.status(200).json({
+	return res.status(200).json({
     "APPkey": `${APP_KEY}`,
     "APPid": `${APP_ID}`
-    })
-    .then(function(res) {
-      console.log(res.status);
-    })
+    }).end();
 })
 
 router.post('/login/:user', localAuth, (req, res) => {
