@@ -2,12 +2,11 @@
 //check local storage for authentication
 Chart.defaults.global.defaultFontColor = "#FAFFD8";
 
-var canvas = document.getElementById('overall-chart');
-var aspectRatio = 1.5;    // height:width = 3:2
-canvas.height = canvas.width * aspectRatio;
+// var canvas = document.getElementById('overall-chart');
+// var aspectRatio = 1.5;    // height:width = 3:2
+// canvas.height = canvas.width * aspectRatio;
 
 function checkAuthentication() {
-	console.log('checking authentication')
 	let username = getUsername();
 	//if not authenticated redirect
 	if(localStorage[`user${username}`] == null) {
@@ -33,9 +32,7 @@ function checkAuthentication() {
 }
 
 function listenForNewVideo(user) {
-	console.log('listening for new video');
 	$('#newBtn').on('click', function() {
-		console.log('pressing button');
 		window.location =  window.location.origin + `/upload.html?username=${user}`;
 	});
 }
@@ -212,7 +209,7 @@ function makeGraphRecentVideo(data) {
 		surprise.push(srprise);
 	});
 	var ctx = document.getElementById('recentVideo').getContext('2d');
-	var chart = new Chart (ctx, {
+	var charts = new Chart (ctx, {
 	type:'line',
 	data: {
 		labels: date,
@@ -249,10 +246,7 @@ function makeGraphRecentVideo(data) {
 		]
 	},
 	options: {}
-}); 
-	
-
-
+	}); 
 }
 
 function listenForEvent() {

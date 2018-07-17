@@ -1,7 +1,6 @@
 'use strict';
 
 let username = window.location.href.split("username=")[1];
-
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
 
 let appKey;
@@ -21,7 +20,6 @@ function checkAuthentication() {
       "Authorization": `Bearer ${localStore.jwt}`
     },
     success: (data) => {
-      console.log('success on being authenticated', data);
       runWebcam();
       appKey = data.APPkey;
       appId = data.APPid;
@@ -35,8 +33,6 @@ function checkAuthentication() {
 }
 
 function runWebcam() {
-
-  
   const constraints = {
     audio: false,
     video: {
@@ -55,8 +51,7 @@ function runWebcam() {
           
       video.onloadedmetadata = function(e) {
             video.play();
-      };
-      console.log('before event');    
+      };   
       listenForEvent(mediaRecorder);
     })
         
@@ -69,29 +64,20 @@ function runWebcam() {
 function listenForEvent(recorder) {
   $('#btn-start-recording').on('click', function() {
     this.disabled = true;              
+    recorder.start();
+    let chunks = [];
+    recorder.ondataavailable = (e) => {
+      chunks.push(e.data);
+    };
 
-        recorder.start();
-        
-        console.log(recorder.state);
-        console.log("recorder started");
-     
-        let chunks = [];
-       
-        recorder.ondataavailable = function(e) {
-          chunks.push(e.data);
-        };
-
-        listenForStop(recorder, chunks);
-
+    listenForStop(recorder, chunks);
     document.getElementById('btn-stop-recording').disabled = false; 
   });
-  $('#dashboard-btn').on('click', (e)=> {
+  $('#dashboard-btn').on('click', (e) => {
     e.preventDefault();
-    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`  
-
+    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`;
   })
 }
-
 function listenForStop(rec,blobParts) {
   $('#btn-stop-recording').on('click', function() {
     document.getElementById('btn-start-recording').disabled = false;
@@ -100,32 +86,22 @@ function listenForStop(rec,blobParts) {
     rec.stop();    
    
     console.log(rec.state);          
-    rec.onstop = function(e) {
-      console.log('rec stopped');
-
+    rec.onstop = (e) => {
       let blob = new Blob(blobParts, {'type':'video/WEBM\;codecs=h264'});
-      console.log(blob);
-      let myFile = new File([blob], "tstVideo.webm", {
-                                                  type: 'video/WEBM\;codecs=h264',
-                                                  lastModified: Date.now()
-                                                });
+      let myFile = new File(
+        [blob], "tstVideo.webm", {
+          type: 'video/WEBM\;codecs=h264',
+          lastModified: Date.now()
+      });
       
       uploadToServer(myFile);
-        
-      const objectUrl = URL.createObjectURL(myFile);
     }
   });
 }
-function downloadVideo(blob) {
-  const tryVideo = myModule.saveAs(blob, "testVideo");
-}
 
-function uploadToServer(myFile) {
-  console.log('on change');
-    
+function uploadToServer(myFile) {    
   var formData = new FormData();
   formData.append('uploads[]',myFile, "video.webm");
-  console.log(formData);
 
   $.ajax({
     url: `/api/video/${username}`,
@@ -133,8 +109,7 @@ function uploadToServer(myFile) {
     data: formData,
     processData: false,
     contentType: false,
-    success: function(data){
-        console.log('upload successful!\n' + data);
+    success: (data) => {
         submitFileToApi(VIDEO_URL);
     },
     error: (err) => console.error(err)
@@ -145,10 +120,9 @@ function deleteVideo(user) {
   const settings = {
     url: `/api/video/${user}`,
     method: "DELETE",
-    success: function(data) {
-      console.log('success! it was deleted', data);
+    success: (data) => {
     },
-    error:function(err){
+    error:(err) => {
       console.error(err);
     }
   };
@@ -157,11 +131,7 @@ function deleteVideo(user) {
 }
 
 
-function submitFileToApi(url) {
-  
-  console.log(url);
-  console.log
-  
+function submitFileToApi(url) {  
   const settings = {
     url: `https://api.kairos.com/v2/media?source=${url}`,
     headers: {
@@ -169,15 +139,14 @@ function submitFileToApi(url) {
       "app_key": `${appKey}`,
     },
     method: "POST",
-    success: function(data) {
-      console.log('success', data);
+    success: (data) => {
       setTimeout(()=>{
         getAnalytics(data.id);
         getVideoData(data.id);
       }, 20000);
 
     },
-    error: function(error) {
+    error: (error) => {
       console.error(error);
     }
   }
@@ -204,8 +173,7 @@ function serializeOverall(data) {
     neutral: data.emotion_score.neutral
   };
 };
-function convertOverallData(data) {
-  console.log('before conver of overall', data);  
+function convertOverallData(data) { 
   let analytics = data.impressions[0];
   let info = serializeOverall(analytics);
 
@@ -224,7 +192,6 @@ function serializeVideoData(data) {
 }
 
 function convertVideoData(data) {
-  console.log('before convert of video frames', data);
   let videoFrame = data.frames.map(frame => {
     let dynamic = frame.people[0];
     let dynamicData = serializeVideoData(dynamic);
@@ -234,11 +201,7 @@ function convertVideoData(data) {
     user: username,
     frames: videoFrame
   };
-
-
-
   postVideoData(dataObject);
-
 }
 
 function getAnalytics(id) {
@@ -249,8 +212,7 @@ function getAnalytics(id) {
       "app_key": `${appKey}`,
     },
     method: "GET",
-    success: function(data) {
-      console.log('success on grabbing the data', data);
+    success: (data) => {
       convertOverallData(data);
       deleteVideo(username);
     },
@@ -266,8 +228,7 @@ function getVideoData(id) {
       "app_key": `${appKey}`,
     },
     method: "GET",
-    success: function(data) {
-      console.log('success on grabbing the video data', data);
+    success: (data) => {
       convertVideoData(data);
     },
     error: (err) => console.error(err)
@@ -311,8 +272,6 @@ function postVideoData(obj) {
   };
   $.ajax(settings);
 }
-
-
 
 $(checkAuthentication)
 
