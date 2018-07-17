@@ -56,7 +56,6 @@ fieldset label,input,button {
 input {
 	height: 30px;
 	width: 400px;
-	text-align: center;
 }
 main {
 	display: flex;
@@ -74,4 +73,8 @@ button {
 	display: flex;
 	align-items: center;
 	background: radial-gradient(circle at 50%, #EEF0F2, #FAFFD8);
+}
+.sub-text {
+	margin-top: 2px;
+	text-align: right;
 }
