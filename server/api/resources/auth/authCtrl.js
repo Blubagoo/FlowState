@@ -20,8 +20,7 @@ const createAuthToken = function(user) {
 function authenticateForLogin(req, user, res) {
 	const authToken = createAuthToken(req.user.serialize());
   return res.status(200).json({
-    url: `https://flow-state.herokuapp.com/dashboard.html?username=${user}`,
-    local: `http://localhost:3000/dashboard.html?username=${user}`,
+    url: `/dashboard.html?username=${user}`,
     user: `${user}`,
     authToken
     });

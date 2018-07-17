@@ -11,7 +11,7 @@ function checkAuthentication() {
 	let username = getUsername();
 	//if not authenticated redirect
 	if(localStorage[`user${username}`] == null) {
-		window.location = "https://flow-state.herokuapp.com/login.html";
+		window.location =  window.location.origin + "/login.html";
 	}
 	
 	let localStore = JSON.parse(localStorage[`user${username}`])
@@ -36,7 +36,7 @@ function listenForNewVideo(user) {
 	console.log('listening for new video');
 	$('#newBtn').on('click', function() {
 		console.log('pressing button');
-		window.location = `https://flow-state.herokuapp.com/upload.html?username=${user}`;
+		window.location =  window.location.origin + `/upload.html?username=${user}`;
 	});
 }
 

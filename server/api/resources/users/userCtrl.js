@@ -20,7 +20,7 @@ function postNewUser(req, res) {
       location: missingField
     });
   }
-  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const stringFields = ['username', 'password'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -82,7 +82,7 @@ function postNewUser(req, res) {
     });
   }
 
-  let {username, password, firstName = '', lastName = ''} = req.body;
+  let {username, password} = req.body;
  
   firstName = firstName.trim();
   lastName = lastName.trim();
@@ -107,9 +107,7 @@ function postNewUser(req, res) {
       
       return User.create({
         username,
-        password: hash,
-        firstName,
-        lastName
+        password: hash
       });
     })
     .then(user => {

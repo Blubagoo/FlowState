@@ -12,24 +12,20 @@ function grabInput() {
 
 		let username = user.val();
 		let password = pass.val();
-		let firstName = fname.val();
-		let lastName = lname.val();
 		user.val('');
 		pass.val('');
 		fname.val('');
 		lname.val('');
-		console.log(username, password, firstName, lastName);
-		postCredentials(username,password,firstName,lastName);
+
+		postCredentials(username,password);
 
 	});
 }
 
-function postCredentials(user, pass, fname, lname) {
+function postCredentials(user, pass) {
 	let jsonObject = {
 			username: user,
-			password: pass,
-			firstName: fname,
-			lastName: lname
+			password: pass
 		}
 	const settings = {
 		url: '/api/users',
@@ -37,7 +33,6 @@ function postCredentials(user, pass, fname, lname) {
 			"Content-Type": "application/json"
 		},
 		method: "POST",
-
 		data: JSON.stringify(jsonObject),
 		success:(data) => {
 			getJWT(data.authToken, user, pass)
@@ -64,7 +59,6 @@ function getJWT(jwt, user, pass) {
 		dataType: "json",
 		method:"POST",
 		success: (data) => {
-			console.log('authenticated user');
 			setLocalStorageVariables(user, data.authToken, data.url);
 		},
 		error: (err) => console.log(err)
@@ -78,11 +72,8 @@ function setLocalStorageVariables(username, JWT_TOKEN, url) {
 		user: username,
 		jwt: JWT_TOKEN
 	});
-
 	let jsonReady = JSON.stringify(users);
-	console.log(users);
 	localStorage.setItem(`user${username}`, jsonReady);
-	console.log(JSON.parse(localStorage[`user${username}`]));
 	window.location = url;
 }
 

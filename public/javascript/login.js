@@ -51,7 +51,7 @@ function setLocalStorageVariables(username, JWT_TOKEN, url) {
 
 	let jsonReady = JSON.stringify(users);
 	localStorage.setItem(`user${username}`, jsonReady);
-	window.location = url;
+	window.location = window.location.origin + url;
 }
 
 
