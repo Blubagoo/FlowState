@@ -78,6 +78,7 @@ function callForData(user) {
 	const settings = {
 		url: `/api/users/analytics/dynamic/${user}`,
 		success: (data) => {
+			console.log('making recent graph');
 			makeGraphRecentVideo(data);
 		},
 		error: (err) => console.error(err)
@@ -131,7 +132,7 @@ function makeGraphOverall(data) {
 		let ngtv = doc.negative;
 		negative.push(ngtv);
 	});
-	var chart = new Chart (ctx, {
+	var charts = new Chart (ctx, {
 		type:'line',
 		data: {
 			labels: date,
@@ -185,6 +186,7 @@ function makeGraphOverall(data) {
 
 
 function makeGraphRecentVideo(data) {
+	console.log(data);
 	var anger = [];
 	var disgust = [];
 	var fear = [];
@@ -209,7 +211,9 @@ function makeGraphRecentVideo(data) {
 		surprise.push(srprise);
 	});
 	var ctx = document.getElementById('recentVideo').getContext('2d');
-	var charts = new Chart (ctx, {
+	console.log(anger,fear,disgust,joy,sadness,surprise);
+
+	var chart = new Chart (ctx, {
 	type:'line',
 	data: {
 		labels: date,
@@ -242,10 +246,9 @@ function makeGraphRecentVideo(data) {
 			label:"surprise",
 			borderColor: "#F34DFE",
 			data: surprise
-		}
-		]
+		}]
 	},
-	options: {}
+	options: {responsive: false}
 	}); 
 }
 
