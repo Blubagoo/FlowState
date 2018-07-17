@@ -84,9 +84,6 @@ function postNewUser(req, res) {
 
   let {username, password} = req.body;
  
-  firstName = firstName.trim();
-  lastName = lastName.trim();
-
   return User.find({username})
     .count()
     .then(count => {
