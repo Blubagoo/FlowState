@@ -171,7 +171,6 @@ function makeGraphOverall(data) {
 			]
 		},
 		options: {
-			Responsive: false,
 			fontSize: 30,
 			scales: {
 				yAxes: [{
@@ -249,7 +248,7 @@ function makeGraphRecentVideo(data) {
 		}
 		]
 	},
-	options: {Responsive: false}
+	options: {}
 }); 
 	
 
