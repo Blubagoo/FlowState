@@ -140,6 +140,7 @@ function submitFileToApi(url) {
     },
     method: "POST",
     success: (data) => {
+      console.log(data);
       setTimeout(()=>{
         getAnalytics(data.id);
         getVideoData(data.id);
@@ -246,7 +247,6 @@ function postAnalytics(obj) {
     contentType: "application/json",
     data: JSON.stringify(obj),
     success: (data) => {
-      console.log('updated database');
     },
     error: (err) => console.error(err)
   };
