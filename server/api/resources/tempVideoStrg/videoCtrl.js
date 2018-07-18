@@ -28,6 +28,9 @@ function postVideo(user, req, res) {
 }
 
 function deleteVideo(user) {
+  if(user === test.webm) {
+    return res.status(204);
+  }
   const filePath = path.join(__dirname, `/${user}.webm`);
   fs.unlink(filePath, (err) => {
     if (err) throw err
