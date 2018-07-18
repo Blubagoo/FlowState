@@ -211,7 +211,6 @@ function makeGraphRecentVideo(data) {
 		surprise.push(srprise);
 	});
 	var ctx = document.getElementById('recentVideo').getContext('2d');
-	console.log(anger,fear,disgust,joy,sadness,surprise);
 
 	var chart = new Chart (ctx, {
 	type:'line',
