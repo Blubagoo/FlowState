@@ -20,22 +20,33 @@
 		</nav>
 	</header>
 	<main role="main">
-		<section role="region">
-			<div id="info-container">
-				<h1 class="header">Learn how to track your emotional state</h1>
-				<p class="info-sect">Welcome to Flow-State! Here we are trying to understand how to track our emotional state to try and better learn how our emotions affect our daily performance. Ultimately Flow-State was created to give us a bit of insight about ourselves and how we are feeling.</p>
+		<div id="landing-area">
+			<div class="graph1">
+				<canvas id="graph1"></canvas>
 			</div>
-		</section>
-		<section role="region">
-			<div id="terms-sect">
-				<h2 class="header">Please read carefully how this works</h2>
-				<p class="info-sect">When you go to the next page and upload a video of yourself understand that the info used is sent to a third party company for analysis. That third party is <span id="kairos-link"><a href="#">Kairos</a></span>. That video is stored on our protected server for no more than 30 or 40 seconds. You will need to register with F-S to begin.</p>
-				</div>
-		</section>
+			<div id="info-area">
+				<section role="region">
+					<div id="info-container">
+						<h1 class="header">Learn how to track your emotional state</h1>
+						<p class="info-sect">Welcome to Flow-State! Here we are trying to understand how to track our emotional state to try and better learn how our emotions affect our daily performance. Ultimately Flow-State was created to give us a bit of insight about ourselves and how we are feeling.</p>
+					</div>
+				</section>
+				<section role="region">
+					<div id="terms-sect">
+						<h2 class="header">Please read carefully how this works</h2>
+						<p class="info-sect">When you go to the next page and upload a video of yourself understand that the info used is sent to a third party company for analysis. That third party is <span id="kairos-link"><a href="#">Kairos</a></span>. That video is stored on our protected server for no more than 30 or 40 seconds. You will need to register with F-S to begin.</p>
+						</div>
+				</section>
+			</div>
+			<div class="graph2">
+				<canvas id="graph2"></canvas>
+			</div>
 	</main>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="javascript/index.js"></script>
 </body>
 </html>

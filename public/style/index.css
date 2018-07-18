@@ -28,7 +28,7 @@ header {
 	flex-direction: row;
 	align-items: center;
 	margin-bottom: 0;
-	font-size: 50px;
+	font-size: 33px;
 }
 #head-nav {
 	display: flex;
@@ -60,9 +60,6 @@ header {
 	justify-content: flex-start;
 }
 
-
-
-
 #info-container,
 #terms-sect {
 	padding: 20px 0;
@@ -87,5 +84,42 @@ ul {
 .info-sect {
 	text-align: center;
 	font-size: 24px;
-	width: 45%;
+	padding: 0 60px;
+}
+#landing-area {
+	display: flex;
+	margin-top: 75px;
+}
+#info-area {
+	margin-top: 100px;
+	margin-right: 40px;
+	padding: 0;
+}
+
+#graph1, 
+#graph2 {
+	width: 400px;
+	height: 600px;
+	padding: 40px 50px;
+}
+
+@media only screen and (max-width: 1200px) {
+	.info-sect {
+		padding: 0;
+	}
+	#landing-area {
+		margin: 0;
+
+	}
+	#graph1, 
+	#graph2 {
+		width: 300px;
+		height: 800px;
+		padding: 40px 50px;
+}
+		#info-container,
+		#terms-sect {
+			font-size: 18px;
+		}
+			
 }
