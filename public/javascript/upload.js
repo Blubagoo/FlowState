@@ -215,7 +215,7 @@ function getAnalytics(id) {
     url: `https://api.kairos.com/v2/analytics/${id}`,
     headers: {
       "app_id": `${appId}`,
-      "app_key": `${appKey}`,
+      "app_key": `${appKey}`
     },
     method: "GET",
     success: (data) => {
