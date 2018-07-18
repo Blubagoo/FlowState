@@ -2,6 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background: radial-gradient(circle at 50%, #4E7CB7, #123459);
+	text-align: center;
 	color: #FAFFD8;
 }
 footer {
@@ -50,7 +51,10 @@ button {
 	background: radial-gradient(circle at 50%, #EEF0F2, #FAFFD8);
 }
 footer {
+	display: flex;
 	margin-top: 125px;
+	justify-content: center;
+
 }
 .main-area {
 	display: flex;
@@ -70,4 +74,7 @@ main {
 #info {
 	display: flex;
 	justify-content: center;
+}
+#camera-shy {
+	margin-top: 100px;
 }

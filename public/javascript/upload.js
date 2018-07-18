@@ -2,6 +2,7 @@
 
 let username = window.location.href.split("username=")[1];
 const VIDEO_URL = `https://flow-state.herokuapp.com/api/video/${username}.webm`;
+const TEST_URL = "https://flow-state.herokuapp.com/api/video/test.webm";
 
 let appKey;
 let appId;
@@ -76,6 +77,10 @@ function listenForEvent(recorder) {
   $('#dashboard-btn').on('click', (e) => {
     e.preventDefault();
     window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`;
+  });
+  $('#camera-shy').on('click', (e) => {
+    submitFileToApi(TEST_URL);
+    console.log('text pressed');
   })
 }
 function listenForStop(rec,blobParts) {
