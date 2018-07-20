@@ -7,32 +7,6 @@ const TEST_URL = "https://flow-state.herokuapp.com/api/video/test.webm";
 let appKey;
 let appId;
 
-function checkAuthentication() {
-  let username = window.location.href.split("username=")[1];
-  //if not authenticated redirect
-  if(localStorage[`user${username}`] == null) {
-    window.location = "https://flow-state.herokuapp.com/login.html";
-  }
-  
-  let localStore = JSON.parse(localStorage[`user${username}`])
-  $.ajax({
-    url: '/api/auth',
-    headers: {
-      "Authorization": `Bearer ${localStore.jwt}`
-    },
-    success: (data) => {
-      runWebcam();
-      appKey = data.APPkey;
-      appId = data.APPid;
-    },
-    error: (err) => {
-      console.error(err)
-      window.location = window.location.origin + "/login.html";
-    }
-  })
-
-}
-
 function runWebcam() {
   const constraints = {
     audio: false,
@@ -53,7 +27,7 @@ function runWebcam() {
       video.onloadedmetadata = function(e) {
             video.play();
       };   
-      listenForEvent(mediaRecorder);
+      listenForMediaEvent(mediaRecorder);
     })
         
     .catch(function(err) {
@@ -62,7 +36,7 @@ function runWebcam() {
 }
 
 
-function listenForEvent(recorder) {
+function listenForMediaEvent(recorder) {
   $('#btn-start-recording').on('click', function() {
     this.disabled = true;              
     recorder.start();
@@ -76,7 +50,30 @@ function listenForEvent(recorder) {
   });
   $('#dashboard-btn').on('click', (e) => {
     e.preventDefault();
-    window.location = `https://flow-state.herokuapp.com/dashboard.html?username=${username}`;
+    let user = window.location.href.split("username=")[1];
+    $('.upload-area').remove();
+    $('main').html(`
+      <div class="dashboard-area">
+        <div id="nav-area">
+          <button id="new-btn">New Video</button>
+          <button id="overall-btn">Overall Feel</button>
+          <button id="lastVid-btn">Video Results</button>
+        </div>
+        <div class="canvas-overall">
+          <canvas id="overall-chart"></canvas>
+        </div>
+        <div class="canvas-recent" hidden>
+          <canvas id="recentVideo"></canvas>
+        </div>
+        <div id="help-info">
+          <p class="help-info">Here the goal is to compare your notes with the our emotional tracking to find
+          out what kind of emotions you were portraying while being very efficient.
+        </div>
+      </div>
+      `);
+      callForAnalytics(user);
+      callForData(user);
+      listenForGraphEvent();
   });
   $('#camera-shy').on('click', (e) => {
     submitFileToApi(TEST_URL);
@@ -115,7 +112,7 @@ function uploadToServer(myFile) {
     processData: false,
     contentType: false,
     success: (data) => {
-        submitFileToApi(VIDEO_URL);
+        checkAuthentication(1);
     },
     error: (err) => console.error(err)
   });
@@ -136,19 +133,19 @@ function deleteVideo(user) {
 }
 
 
-function submitFileToApi(url) {  
+function submitFileToApi(url, obj) { 
   const settings = {
     url: `https://api.kairos.com/v2/media?source=${url}`,
     headers: {
-      "app_id": `${appId}`,
-      "app_key": `${appKey}`,
+      "app_id": `${obj.APPid}`,
+      "app_key": `${obj.APPkey}`,
     },
     method: "POST",
     success: (data) => {
       console.log(data);
       setTimeout(()=>{
-        getAnalytics(data.id);
-        getVideoData(data.id);
+        getAnalytics(data.id, obj);
+        getVideoData(data.id, obj);
       }, 20000);
 
     },
@@ -210,12 +207,12 @@ function convertVideoData(data) {
   postVideoData(dataObject);
 }
 
-function getAnalytics(id) {
+function getAnalytics(id, obj) {
   const settings = {
     url: `https://api.kairos.com/v2/analytics/${id}`,
     headers: {
-      "app_id": `${appId}`,
-      "app_key": `${appKey}`
+      "app_id": `${obj.APPid}`,
+      "app_key": `${obj.APPkey}`
     },
     method: "GET",
     success: (data) => {
@@ -226,15 +223,16 @@ function getAnalytics(id) {
   };
   $.ajax(settings);
 }
-function getVideoData(id) {
+function getVideoData(id, obj) {
   const settings = {
     url: `https://api.kairos.com/v2/media/${id}`,
     headers: {
-      "app_id": `${appId}`,
-      "app_key": `${appKey}`,
+      "app_id": `${obj.APPid}`,
+      "app_key": `${obj.APPkey}`,
     },
     method: "GET",
     success: (data) => {
+      console.log('video data', data)
       convertVideoData(data);
     },
     error: (err) => console.error(err)
@@ -252,6 +250,7 @@ function postAnalytics(obj) {
     contentType: "application/json",
     data: JSON.stringify(obj),
     success: (data) => {
+      console.log('success');
     },
     error: (err) => console.error(err)
   };
@@ -270,14 +269,10 @@ function postVideoData(obj) {
     data: JSON.stringify(obj),
     success: (data) => {
       console.log('updated database');
-      
-      setTimeout(window.location = `dashboard.html?username=${username}`, 5 * 1000)
+      setTimeout(window.location = `index.html?username=${username}`, 5 * 1000)
     },
     error: (err) => console.error(err)
   };
   $.ajax(settings);
 }
-
-$(checkAuthentication)
-
 

@@ -20,7 +20,7 @@ const createAuthToken = function(user) {
 function authenticateForLogin(req, user, res) {
 	const authToken = createAuthToken(req.user.serialize());
   return res.status(200).json({
-    url: `/dashboard.html?username=${user}`,
+    url: `/index.html?username=${user}`,
     user: `${user}`,
     authToken
     });

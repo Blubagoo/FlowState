@@ -1,88 +1,102 @@
-Chart.defaults.global.defaultFontColor = "#FAFFD8";
-function makeGraphOverall(data) {
-	var ctx = document.getElementById('graph2').getContext('2d');
-	var charts = new Chart (ctx, {
-		type:'bar',
-		data: {
-			datasets: [{
-				label: "anger",
-				backgroundColor: "#CA6624",
-				data: [12]
+
+function checkAuthentication(need) {
+	// $('.hide').hide();
+	let url = window.location.href;
+	let attempt = url.split("?");
+	if(attempt.length > 1) {
+		let username = url.split("username=")[1];
+		
+		if(localStorage[`user${username}`] == null) {
+			return;
+		};
+		let localStore = JSON.parse(localStorage[`user${username}`])
+		$.ajax({
+			url: '/api/auth',
+			headers: {
+				"Authorization": `Bearer ${localStore.jwt}`
 			},
-			{
-				label: "joy",
-				backgroundColor: "#5C3085",
-				data: [47,58,26,31,1,58,47]
+			success: (data) => {
+				console.log(data);
+				changeStatus(username);
+				checkNeeds(need, data);
+				$('#nav-area').show();
 			},
-			{
-				label: "sadness",
-				backgroundColor: "#4AC85C",
-				data: [85]
-			},
-			{
-				label: "surprise",
-				backgroundColor: "#F0ED2B",
-				data: [22]
-			},
-			{
-				label: "disgust",
-				backgroundColor: "#5D70FC",
-				data: [65]
-			},
-			{
-				label: "fear",
-				backgroundColor: "#F34DFE",
-				data: [29]
+			error: (data) => {
+				console.log(data.message);
 			}
-			]
-		},
-		options: {responsive: false}
-}); 
+		});
+	};
+}
+function checkNeeds(need, data) {
+	if(need === 1) {
+		console.log(VIDEO_URL)
+		submitFileToApi(VIDEO_URL, data)
+	}
+}
+function listenForCredentialEvent() {
+
+	$('nav').on('click','#logout', (e)=> {
+		console.log('button pressed')
+		e.preventDefault();
+		window.location.href = window.location.origin;
+	});
+
+	$('nav').on('click', '#new-user', (e) => {
+		e.preventDefault();
+		$('#legend').html(`
+			<label for="user"></label>
+			<input type="text" name="user" id="user-input" placeholder="Username">
+			<label for="pass"></label>
+			<input type="password" name="pass" id="pass-input" placeholder="Password">
+			<button id="register-btn">Register</button>
+			<div class="help-area">
+				<p class="help-text"><a href ="#" class="help-text" id="demo">Just want a demo?</a></p>
+				<p class="help-text">Or are you a new <a href="#" class="help-text" id="new-user">User</a>
+			</div>
+			`);
+		$('nav').on('click', '#register-btn', (e) => {
+			grabInput();
+		})
+	})
+}
+function changeStatus(user) {
+	$('form').hide();
+	$('nav').html(`
+		<div class="logged-in">
+			<p class="help-text">Hello, ${user} is logged in.</p>
+			<button id="logout">LOGOUT</button>
+		</div>
+		`);
+	$('.landing-area').remove();
+	$('main').html(`
+		<div class="dashboard-area">
+			<div id="nav-area">
+				<button id="new-btn">New Video</button>
+				<button id="overall-btn">Overall Feel</button>
+				<button id="lastVid-btn">Video Results</button>
+			</div>
+			<div class="canvas-overall">
+				<canvas id="overall-chart"></canvas>
+			</div>
+			<div class="canvas-recent" hidden>
+				<canvas id="recentVideo"></canvas>
+			</div>
+			<div id="help-info">
+				<p class="help-info">Here the goal is to compare your notes with the our emotional tracking to find
+				out what kind of emotions you were portraying while producing the peak of your code.
+			</div>
+		</div>
+		`);
+	callForAnalytics(user);
+	callForData(user);
+	listenForGraphEvent();
+
 }
 
 
 
-function makeGraphRecentVideo(data) {
 
-	var ctx = document.getElementById('graph1').getContext('2d');
 
-	var chart = new Chart (ctx, {
-	type:'bar',
-	data: {
-		datasets: [{
-			label: "joy",
-			backgroundColor: "#CA6624",
-			data: [8]
-		},
-		{
-			label: "fear",
-			backgroundColor: "#5C3085",
-			data: [44]
-		},
-		{
-			label: "anger",
-			backgroundColor: "#4AC85C",
-			data: [5]
-		},
-		{
-			label: "sadness",
-			backgroundColor: "#F0ED2B",
-			data: [58]
-		},
-		{
-			label: "disgust",
-			backgroundColor: "#5D70FC",
-			data: [83]
-		},
-		{
-			label: "surprise",
-			backgroundColor: "#F34DFE",
-			data: [12]
-		}]
-	},
-	options: {responsive: false}
-	}); 
-}
-
-$(makeGraphRecentVideo);
-$(makeGraphOverall);
+$(checkAuthentication)
+$(listenForLogin);
+$(listenForCredentialEvent)

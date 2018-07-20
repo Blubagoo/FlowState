@@ -4,6 +4,10 @@
 
 
 function listenForLogin() {
+	$('#demo').on('click', (e)=> {
+		e.preventDefault();
+		authenticateUser("Demo", "password");
+	})
 	$('#submit-btn').on('click', e => {
 	e.preventDefault();
 
@@ -17,7 +21,7 @@ function listenForLogin() {
 
 });
 }
-
+let Unauthorized = ""
 //send to autenticate
 function authenticateUser(user, pass) {
 	var info = {
@@ -35,13 +39,22 @@ function authenticateUser(user, pass) {
 		dataType: "json",
 		method:"POST",
 		success: (data) => {
-			setLocalStorageVariables(user, data.authToken, data.url);
+			setLocalStorageVariables(data.user, data.authToken, data.url);
+			$('#error-text').remove();
 		},
-		error: (err) => console.log(err)
+		error: (err) => {
+			console.log(err);
+			if(err.status === 401) {
+				$('.help-area').append(`
+					<p id="error-text" class="help-text">Username/Password is invalid</p>
+					`);
+			}
+		}
 	}
 	$.ajax(settings);
 }
-function setLocalStorageVariables(username, JWT_TOKEN, url) {	
+function setLocalStorageVariables(username, JWT_TOKEN, url) {
+console.log('setting variables')	
 	let users = {};
 	Object.assign(users, {
 		user: username,
@@ -53,13 +66,6 @@ function setLocalStorageVariables(username, JWT_TOKEN, url) {
 	localStorage.setItem(`user${username}`, jsonReady);
 	window.location = window.location.origin + url;
 }
-
-
-
-
-
-$(listenForLogin);
-
 
 
 

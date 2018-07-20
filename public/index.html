@@ -1,52 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Master your flow</title>
+<head>
+	<title>Master your flow</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="description" content="Learn when you need to stop and learn when you need to keep churning out code with Flow state">
 	<meta name="keywords" content="Flowstate facial recognition software Kairos">
 	<link href="style/index.css" rel="stylesheet" type="text/css">
-	</head>
+</head>
 <body>
-	<header role="banner" id="head-nav">
-		<p id="logo">fS</p>
-		<h1 id="banner">Flow-State</h1>
-		<nav role="navigation" id="nav-bar">
-			<ul>	
-				<li><a href="register.html">Register |</a></li>
-				<li><a href="login.html">Login</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main role="main">
-		<div id="landing-area">
-			<div class="graph1">
-				<canvas id="graph1"></canvas>
+	<div class="body">
+		<div class='banner-bg'>
+			<header role="banner" id="head-nav">
+				<div class="banner">
+					<h1 id="banner">Flow-State</h1>
+				</div>
+				<div id="nav-area">
+					<nav role="navigation" id="nav-bar">
+						<form>
+							<fieldset>
+								<legend id="legend">
+									<label for="user"></label>
+									<input type="text" name="user" id="user-input" placeholder="Username">
+									<label for="pass"></label>
+									<input type="password" name="pass" id="pass-input" placeholder="Password">
+									<button id="submit-btn">Enter</button>
+									<div class="help-area">
+										<p class="help-text"><a href ="#" class="help-text" id="demo">Just want a demo?</a></p>
+										<p class="help-text">Or are you a new <a href="#" class="help-text" id="new-user">User</a>
+									</div>
+								</legend>
+							</fieldset>
+						</form>
+					</nav>
+				</div>
+			</header>
+		</div>
+		<main role="main">
+			<div class="landing-area">
+				<div class="info-top">
+					<h1 class="header">Track your emotional state</h1>
+					<p class="info-sect">Welcome to Flow-State! Here we are trying to understand how to track our emotional state to try and better learn how our emotions affect our daily performance. We recommend taking several videos throughout the day and keeping a notepad log on how much work you got done in between videos.</p>
+				</div>
+				<div class="info-bot">
+					<h2 class="header head-bot">Please read carefully how this works</h2>
+					<p class="info-sect">When you go to the next page and upload a video of yourself understand that the video is analyzed through a third party immediately and deleted after. That third party is <span id="kairos-link"><a href="#">Kairos</a></span>. That video is stored on our protected server for no more than 30 or 40 seconds.</p>
+				</div>
 			</div>
-			<div id="info-area">
-				<section role="region">
-					<div id="info-container">
-						<h1 class="header">Learn how to track your emotional state</h1>
-						<p class="info-sect">Welcome to Flow-State! Here we are trying to understand how to track our emotional state to try and better learn how our emotions affect our daily performance. Ultimately Flow-State was created to give us a bit of insight about ourselves and how we are feeling.</p>
-					</div>
-				</section>
-				<section role="region">
-					<div id="terms-sect">
-						<h2 class="header">Please read carefully how this works</h2>
-						<p class="info-sect">When you go to the next page and upload a video of yourself understand that the info used is sent to a third party company for analysis. That third party is <span id="kairos-link"><a href="#">Kairos</a></span>. That video is stored on our protected server for no more than 30 or 40 seconds. You will need to register with F-S to begin.</p>
-						</div>
-				</section>
-			</div>
-			<div class="graph2">
-				<canvas id="graph2"></canvas>
-			</div>
-	</main>
-<script
+
+
+		</main>
+	</div>
+	<script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-<script src="javascript/index.js"></script>
+	<script src="javascript/login.js"></script>
+	<script src="javascript/dashboard.js"></script>
+	<!-- <script src="javascript/registration.js"></script> -->
+	<script src="javascript/upload.js"></script>
+	<script src="javascript/index.js"></script>
+
 </body>
 </html>

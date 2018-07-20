@@ -1,35 +1,10 @@
 'use strict';
 //check local storage for authentication
 Chart.defaults.global.defaultFontColor = "#FAFFD8";
-
+Chart.defaults.global.defaultFontSize = 10
 // var canvas = document.getElementById('overall-chart');
 // var aspectRatio = 1.5;    // height:width = 3:2
 // canvas.height = canvas.width * aspectRatio;
-
-function checkAuthentication() {
-	let username = getUsername();
-	//if not authenticated redirect
-	if(localStorage[`user${username}`] == null) {
-		window.location =  window.location.origin + "/login.html";
-	}
-	
-	let localStore = JSON.parse(localStorage[`user${username}`])
-	$.ajax({
-		url: '/api/auth',
-		headers: {
-			"Authorization": `Bearer ${localStore.jwt}`
-		},
-		success: () => {
-			callForAnalytics(username);
-			callForData(username);
-			listenForNewVideo(username);
-		},
-		error: () => {
-			window.location.oigin + "/login.html";
-		}
-	})
-
-}
 
 function listenForNewVideo(user) {
 	$('#newBtn').on('click', function() {
@@ -78,7 +53,7 @@ function callForData(user) {
 	const settings = {
 		url: `/api/users/analytics/dynamic/${user}`,
 		success: (data) => {
-			console.log('making recent graph');
+			console.log('making recent graph', data);
 			makeGraphRecentVideo(data);
 		},
 		error: (err) => console.error(err)
@@ -172,10 +147,18 @@ function makeGraphOverall(data) {
 			fontSize: 30,
 			scales: {
 				yAxes: [{
+					gridLines: {
+						color: "white"
+					},
 					scaleLabel:{
 						lineHeight: 100,
 						fontSize: 80,
 						labelString: "frames"
+					}
+				}],
+				xAxes: [{
+					gridLines: {
+						color: "white"
 					}
 				}]
 			}
@@ -247,11 +230,30 @@ function makeGraphRecentVideo(data) {
 			data: surprise
 		}]
 	},
-	options: {responsive: false}
+	options: {
+			fontSize: 30,
+			scales: {
+				yAxes: [{
+					gridLines: {
+						color: "white"
+					},
+					scaleLabel:{
+						lineHeight: 100,
+						fontSize: 80,
+						labelString: "frames"
+					}
+				}],
+				xAxes: [{
+					gridLines: {
+						color: "white"
+					}
+				}]
+			}
+		}
 	}); 
 }
 
-function listenForEvent() {
+function listenForGraphEvent() {
 	$('#lastVid-btn').on('click',(e)=> {
 		e.preventDefault();
 		$('.canvas-overall').hide();
@@ -261,10 +263,36 @@ function listenForEvent() {
 		e.preventDefault();
 		$('.canvas-recent').hide();
 		$('.canvas-overall').show();
-
-	})
+	});
+	$('#new-btn').on('click', (e) => {
+		e.preventDefault();
+		$('.dashboard-area').remove();
+		$('main').html(`
+			<div class="upload-area">
+				<div id="info">
+					<p class="info-sect instructions">Take about a 20 second video about how your 
+					current project is going.</h2>
+				</div>
+				<div id="vid-area">
+					<div id="vid-nav-area">
+						<button id="btn-start-recording" class="info">Start Recording</button>
+						<button id="btn-stop-recording"  class="info" disabled>Stop Recording</button>
+						<button id="dashboard-btn" class="info">Back to Dashboard</button>
+					</div>
+					<div class="main-area">
+						<div class="videoNSample">
+							<div class="video">
+								<video autoplay="true" id="videoElement" alt="Sorry "></video>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			`)
+		runWebcam();
+	});
 }
 
-$(checkAuthentication);
-$(listenForEvent)
+// $(checkAuthentication);
+$(listenForGraphEvent)
 
