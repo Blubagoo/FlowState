@@ -5,21 +5,20 @@ let pass = $('#pass-input');
 let fname = $('#fname-input');
 let lname = $('#lname-input');
 
-function grabInput() {
-	$('#submit-btn').on('click', (e)=> {
-		e.preventDefault();
-		console.log('getting data');
-
-		let username = user.val();
-		let password = pass.val();
-		user.val('');
-		pass.val('');
-		fname.val('');
-		lname.val('');
-
+function grabInput(user, pass) {
+	console.log('getting data');
+	let expectedUser = user.split(/\s/);
+	console.log(expectedPass, expectedUser);
+	let expectedPass = pass.split(/\s/);
+	let username = user.val();
+	let password = pass.val();
+	user.val('');
+	pass.val('');
+	if(expectedUser.length === 1 && expectedPass.length === 1) {
 		postCredentials(username,password);
-
-	});
+	}
+	$('.help-area').append(`<p id="whiteSpace" class="help-text"> No whitespaces!`);
+	setTimeout($('#whiteSpace').remove, 3 * 1000);
 }
 
 function postCredentials(user, pass) {
@@ -76,6 +75,3 @@ function setLocalStorageVariables(username, JWT_TOKEN, url) {
 	localStorage.setItem(`user${username}`, jsonReady);
 	window.location = url;
 }
-
-
-$(grabInput)

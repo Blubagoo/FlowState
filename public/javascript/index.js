@@ -55,7 +55,18 @@ function listenForCredentialEvent() {
 			</div>
 			`);
 		$('nav').on('click', '#register-btn', (e) => {
-			grabInput();
+			e.preventDefault();
+			let user = $('#user-input').val();
+			let pass = $('#pass-input').val();
+			let expectedUser = user.split(/\s/);
+			let expectedPass = pass.split(/\s/);
+			console.log(expectedPass, expectedUser);
+			$('#user-input').val('');
+			$('#pass-input').val('');
+			if(expectedUser.length === 1 && expectedPass.length === 1) {
+				postCredentials(username,password);
+			}
+			$('.help-area').append(`<p id="whiteSpace" class="help-text"> No whitespaces!`);
 		})
 	})
 }
