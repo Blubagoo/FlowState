@@ -9,7 +9,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "chartist": "^0.11.0",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
