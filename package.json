@@ -17,7 +17,7 @@
     "file-saver": "^1.3.8",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "multer": "^1.3.1",
